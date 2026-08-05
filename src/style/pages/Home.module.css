@@ -1,0 +1,23 @@
+.hero { background: var(--color-ink); min-height: 92vh; position: relative; overflow: hidden; display: flex; align-items: stretch; }
+.heroVideo { width: 100%; height: 100%; object-fit: cover; object-position: 65% center; position: absolute; inset: 0; }
+.heroOverlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.55) 42%, rgba(17,17,17,0.15) 75%); }
+.heroContent { flex: 1 1 560px; min-width: 320px; max-width: 760px; display: flex; flex-direction: column; justify-content: center; padding: 140px 56px 80px; gap: 28px; color: #F2F2F0; position: relative; z-index: 2; }
+.heroKicker { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-accent); font-weight: 700; }
+.heroContent h1 { margin: 0; font-size: clamp(48px, 7vw, 104px); font-weight: 900; line-height: 0.94; letter-spacing: -0.03em; text-transform: uppercase; }
+.heroContent p { margin: 0; max-width: 460px; font-size: 18px; line-height: 1.6; color: #B8B8B4; }
+.heroActions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+.primaryButton { background: var(--color-accent); color: var(--color-ink); font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 16px 30px; display: inline-block; }
+.primaryButton:hover { background: #F2F2F0; }
+.secondaryButton { background: none; color: #F2F2F0; font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 16px 30px; border: 1px solid #4A4A48; display: inline-block; }
+.secondaryButton:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+.destaques { padding: 120px 56px; max-width: 1600px; margin: 0 auto; }
+.sectionHeader { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 64px; }
+.sectionNumber { font-size: 13px; color: var(--color-muted); font-weight: 600; letter-spacing: 0.04em; }
+.sectionHeader h2 { margin: 8px 0 0; font-size: clamp(36px, 5vw, 64px); font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; line-height: 0.98; }
+.sectionHeader p { max-width: 340px; font-size: 15px; color: var(--color-muted); line-height: 1.6; margin: 0; }
+.destaquesGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; background: var(--color-border); }
+
+.categorias { padding: 0 56px 120px; max-width: 1600px; margin: 0 auto; }
+.categorias h2 { margin: 0 0 56px; font-size: clamp(36px, 5vw, 64px); font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; line-height: 0.98; }
+.categoriasGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); }

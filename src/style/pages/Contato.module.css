@@ -1,0 +1,13 @@
+.section { padding: 120px 56px; max-width: 1200px; margin: 0 auto; }
+.header { margin-bottom: 48px; }
+.sectionNumber { font-size: 13px; color: var(--color-muted); font-weight: 600; letter-spacing: 0.04em; }
+.header h2 { margin: 8px 0 0; font-size: clamp(30px, 4.4vw, 54px); font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; line-height: 1; }
+.header p { margin: 20px 0 0; font-size: 16px; color: var(--color-muted); max-width: 520px; }
+.form { display: flex; flex-wrap: wrap; gap: 44px; }
+.fields { flex: 1 1 380px; min-width: 280px; display: flex; flex-direction: column; gap: 22px; }
+.fields label { display: flex; flex-direction: column; gap: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-muted); }
+.fields input, .fields textarea { border: none; border-bottom: 1px solid var(--color-border); padding: 12px 4px; font-size: 16px; font-family: inherit; background: transparent; color: var(--color-ink); }
+.upload { flex: 1 1 280px; min-width: 240px; display: flex; flex-direction: column; gap: 16px; }
+.submitButton { margin-top: 8px; background: var(--color-ink); color: #F2F2F0; border: none; font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 16px 30px; cursor: pointer; }
+.submitButton:hover { background: var(--color-accent); color: var(--color-ink); }
+.confirmation { font-size: 13px; color: #5c8c00; }

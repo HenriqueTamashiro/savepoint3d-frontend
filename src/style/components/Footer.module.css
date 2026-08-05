@@ -1,0 +1,12 @@
+.footer { background: var(--color-ink-soft); color: #B8B8B4; padding: 80px 56px 32px; }
+.inner { max-width: 1600px; margin: 0 auto; }
+.logo { height: 96px; max-height: 96px; width: auto; object-fit: contain; margin-bottom: 40px; }
+.headline { margin: 0 0 64px; font-size: clamp(28px, 4vw, 46px); font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; color: #F2F2F0; line-height: 1.1; }
+.columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 32px; border-top: 1px solid #2A2A28; padding-top: 48px; }
+.column { display: flex; flex-direction: column; gap: 14px; }
+.column a { color: #B8B8B4; font-size: 13px; }
+.column a:hover { color: var(--color-accent); }
+.columnTitle { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #F2F2F0; }
+.bottomBar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-top: 1px solid #2A2A28; margin-top: 48px; padding-top: 24px; }
+.paymentMethods { display: flex; gap: 10px; }
+.paymentBadge { border: 1px solid #3A3A38; padding: 5px 10px; font-size: 11px; color: #8A8A86; }

@@ -1,0 +1,77 @@
+import { Product } from "../types/product";
+
+// const api = import.meta.env.VITE_API_URL;
+
+// const response = await fetch(`${api}/users/posts`);
+// const valor = response.json();
+// console.log(valor);
+
+export const PRODUCTSBACK: Product[] = [];
+
+export const PRODUCTS: Product[] = [
+  {
+    id: "product-001",
+    category: "fantasia",
+    categoryLabel: "Fantasia",
+    name: "Crimson Ronin",
+    scale: "Escala 1/6",
+    material: "Impressão 3D em PLA com pintura manual",
+    price: 899.9,
+    tag: "Edição limitada",
+    stock: "available",
+    imageUrl: "/assets/img/1.png",
+    alt: "Crimson Ronin, guerreiro em armadura preta e vermelha com katana",
+  },
+  {
+    id: "product-002",
+    category: "games",
+    categoryLabel: "Jogos",
+    name: "Neon Huntress",
+    scale: "Escala 1/7",
+    material: "Impressão 3D em PLA com pintura manual",
+    price: 749.9,
+    tag: "Edição Jogos",
+    stock: "available",
+    imageUrl: "/assets/img/3.png",
+    alt: "Neon Huntress, guerreira em armadura roxa com espada",
+  },
+  {
+    id: "product-003",
+    category: "personalizados",
+    categoryLabel: "Personalizado",
+    name: "Aurora Sentinel",
+    scale: "Escala 1/6",
+    material: "PLA de alta qualidade + base gravada",
+    price: 1299.9,
+    tag: "Sob encomenda",
+    stock: "preorder",
+    imageUrl: "/assets/img/5.png",
+    alt: "Aurora Sentinel, guerreira com katana sobre base personalizada Save Point3D",
+  },
+  {
+    id: "product-004",
+    category: "scifi",
+    categoryLabel: "Ficção Científica",
+    name: "Titan Mech",
+    scale: "Escala 1/12",
+    material: "PLA de alta qualidade + detalhes metálicos",
+    price: 1599.9,
+    tag: "Série Dark Queen",
+    stock: "available",
+    imageUrl: "/assets/img/6.png",
+    alt: "Titan Mech, mecha de combate em metal escuro",
+  },
+  {
+    id: "product-005",
+    category: "fantasia",
+    categoryLabel: "Fantasia",
+    name: "Shadow Knight",
+    scale: "Escala 1/6",
+    material: "Impressão 3D em PLA com pintura manual",
+    price: 1099.9,
+    tag: "Fantasia Sombria",
+    stock: "available",
+    imageUrl: "/assets/img/7.png",
+    alt: "Shadow Knight, guerreiro sombrio com espada e troféu",
+  },
+];
