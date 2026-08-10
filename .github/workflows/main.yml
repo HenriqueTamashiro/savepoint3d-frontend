@@ -1,0 +1,74 @@
+name: Deploy SavePoint3DFrontend
+run-name: Iniciando Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: savepoint3d-frontend-production
+  cancel-in-progress: true
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: main
+    timeout-minutes: 15
+
+    env:
+      NODE_VERSION: 24
+      RELEASE_NAME: savepoint3d-frontend.tgz
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION}}
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Package release
+        run: |
+          tar -czf "${{ env.RELEASE_NAME }}" dist
+
+      - name: Upload do package para a VM na GCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          source: ${{ env.RELEASE_NAME }}
+          target: /tmp
+          overwrite: true
+
+      - name: Deploy frontend on Azure VM
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            set -euo pipefail
+
+            RELEASE_PATH="/tmp/${{ env.RELEASE_NAME }}"
+            STAGING_PATH="/tmp/savepoint3d-frontend-release"
+
+            rm -rf "$STAGING_PATH"
+            mkdir -p "$STAGING_PATH"
+            tar -xzf "$RELEASE_PATH" -C "$STAGING_PATH"
+            rm -f "$RELEASE_PATH"
+
+            sudo install -d -o "$(id -un)" -g "$(id -gn)" /var/www/savepoint3d
+            cp -a "$STAGING_PATH/dist/." /var/www/savepoint3d
+
+            rm -rf "$STAGING_PATH"
