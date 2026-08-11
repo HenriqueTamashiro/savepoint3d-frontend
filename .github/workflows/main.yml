@@ -51,7 +51,7 @@ jobs:
           target: /tmp
           overwrite: true
 
-      - name: Deploy frontend on Azure VM
+      - name: Deploy frontend na GCP
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.VM_HOST }}
