@@ -1,0 +1,20 @@
+.section {
+  padding: 120px 56px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.section h2 {
+  margin: 0 0 56px;
+  font-size: clamp(32px, 4.6vw, 54px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 48px;
+}

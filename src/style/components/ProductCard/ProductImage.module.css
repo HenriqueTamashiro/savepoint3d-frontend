@@ -1,0 +1,32 @@
+.imageWrap {
+  aspect-ratio: 3 / 4;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-ink-soft);
+}
+
+.tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--color-accent);
+  color: var(--color-ink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+}
+
+.stock {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: var(--color-accent);
+  color: var(--color-ink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+}

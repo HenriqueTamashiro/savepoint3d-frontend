@@ -1,0 +1,37 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  background: rgba(242, 242, 240, 0);
+  border-bottom: 1px solid transparent;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.headerScrolled {
+  background: rgba(242, 242, 240, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom-color: var(--color-border);
+}
+
+.inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 10px 40px;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 72px;
+  max-height: 72px;
+  width: auto;
+  object-fit: contain;
+}

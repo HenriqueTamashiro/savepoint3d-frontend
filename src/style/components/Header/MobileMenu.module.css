@@ -1,0 +1,30 @@
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  z-index: 200;
+  padding: 28px 32px;
+  overflow-y: auto;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  float: right;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 60px;
+}
+
+.mobileNavLink {
+  font-size: 34px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}

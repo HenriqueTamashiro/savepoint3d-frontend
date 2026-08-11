@@ -1,4 +1,4 @@
-import styles from '../../style/components/StyledFigures.module.css';
+import styles from '../../style/components/StyledFigures';
 
 export default function StyledFigures() {
   return (

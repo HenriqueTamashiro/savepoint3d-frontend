@@ -1,5 +1,5 @@
 import { useNewsletter } from './handler';
-import styles from '../../style/components/Newsletter.module.css';
+import styles from '../../style/components/Newsletter';
 
 export default function Newsletter() {
   const { email, setEmail, submitted, handleSubmit } = useNewsletter();

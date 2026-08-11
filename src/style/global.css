@@ -1,17 +1,21 @@
 :root {
-  --color-bg: #F2F2F0;
+  --color-bg: #f2f2f0;
   --color-ink: #111111;
-  --color-ink-soft: #1A1A1A;
-  --color-accent: #B6FF1A;
+  --color-ink-soft: #1a1a1a;
+  --color-accent: #a7e918;
   --color-muted: #686868;
-  --color-muted-dark: #8A8A86;
-  --color-border: #D8D8D5;
-  --font-sans: 'Inter', Helvetica, Arial, sans-serif;
+  --color-muted-dark: #8a8a86;
+  --color-border: #d8d8d5;
+  --font-sans: "Inter", Helvetica, Arial, sans-serif;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -22,15 +26,37 @@ body {
   overflow-x: hidden;
 }
 
-button, input, textarea { font: inherit; }
-img, video { max-width: 100%; }
+button,
+input,
+textarea {
+  font: inherit;
+}
+img,
+video {
+  max-width: 100%;
+}
 
-a { color: var(--color-ink); text-decoration: none; }
-a:hover { color: #5c8c00; }
+a {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+a:hover {
+  color: #5c8c00;
+}
 
-::selection { background: var(--color-accent); color: var(--color-ink); }
+::selection {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }

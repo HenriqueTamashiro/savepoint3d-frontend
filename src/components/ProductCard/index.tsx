@@ -1,6 +1,6 @@
 import { Product } from "../../types/product";
 import { useProductCardHover, formatPrice } from "./handler";
-import styles from "../../style/components/ProductCard.module.css";
+import styles from "../../style/components/ProductCard";
 
 interface ProductCardProps {
   product: Product;
@@ -30,6 +30,7 @@ export default function ProductCard({
           className={styles.image}
         />
         <span className={styles.tag}>{product.tag}</span>
+        <span className={styles.stock}>{product.stock} Uni.</span>
       </div>
       <div className={styles.body}>
         <span className={styles.meta}>

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useHeader } from './handler';
-import styles from '../../style/components/Header.module.css';
+import styles from '../../style/components/Header';
 
 interface HeaderProps {
   cartCount: number;

@@ -1,0 +1,22 @@
+.bottomBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid #2a2a28;
+  margin-top: 48px;
+  padding-top: 24px;
+}
+
+.paymentMethods {
+  display: flex;
+  gap: 10px;
+}
+
+.paymentBadge {
+  border: 1px solid #3a3a38;
+  padding: 5px 10px;
+  font-size: 11px;
+  color: #8a8a86;
+}

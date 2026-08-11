@@ -1,4 +1,4 @@
-import styles from '../../style/components/StatsSection.module.css';
+import styles from '../../style/components/StatsSection';
 
 const STATS = [
   { value: '+150', label: 'Peças produzidas' },

@@ -1,12 +1,8 @@
-import { Product } from "../types/product";
-
 // const api = import.meta.env.VITE_API_URL;
 
 // const response = await fetch(`${api}/users/posts`);
 // const valor = response.json();
 // console.log(valor);
-
-export const PRODUCTSBACK: Product[] = [];
 
 export const PRODUCTS: Product[] = [
   {

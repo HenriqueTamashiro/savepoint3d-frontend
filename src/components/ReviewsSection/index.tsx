@@ -1,4 +1,4 @@
-import styles from '../../style/components/ReviewsSection.module.css';
+import styles from '../../style/components/ReviewsSection';
 
 const REVIEWS = [
   { name: 'Rafael M.', product: 'Crimson Ronin', stars: '★★★★★', comment: 'Acabamento impecável, muito acima do que eu esperava de uma peça sob encomenda.', date: '12/06/2026' },

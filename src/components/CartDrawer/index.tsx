@@ -1,7 +1,7 @@
 import { CartLine, Product } from "../../types/product";
 import { useCartDrawer } from "./handler";
 import { formatPrice } from "../ProductCard/handler";
-import styles from "../../style/components/CartDrawer.module.css";
+import styles from "../../style/components/CartDrawer";
 
 interface CartDrawerProps {
   open: boolean;

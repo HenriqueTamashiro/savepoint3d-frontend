@@ -1,4 +1,4 @@
-import styles from '../../style/components/Footer.module.css';
+import styles from '../../style/components/Footer';
 
 const PAYMENT_METHODS = ['Pix', 'Cartão', 'Boleto', 'Parcelado'];
 

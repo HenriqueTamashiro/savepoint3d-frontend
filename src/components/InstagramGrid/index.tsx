@@ -1,4 +1,4 @@
-import styles from '../../style/components/InstagramGrid.module.css';
+import styles from '../../style/components/InstagramGrid';
 
 const TILES = [
   { image: '/assets/img/1.png', alt: 'Detalhe de pintura em Crimson Ronin', position: 'center 20%' },
