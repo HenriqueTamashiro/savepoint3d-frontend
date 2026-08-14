@@ -1,5 +1,6 @@
 .imageWrap {
-  aspect-ratio: 3 / 4;
+  /* Mesmo padrão das imagens 1.png, 3.png, 5.png etc.: 1122 x 1402. */
+  aspect-ratio: 1122 / 1402;
   position: relative;
   overflow: hidden;
   background: var(--color-ink-soft);

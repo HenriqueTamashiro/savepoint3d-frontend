@@ -1,77 +1,105 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Product } from "../../types/product";
 import { Post, PostType } from "../../types/post";
 import { fetchProducts, fetchPost } from "../../services/api";
+
+export function postManager(posts: Post[]): Record<PostType, Post[]> {
+  const postTypes = Object.fromEntries(
+    Object.values(PostType).map((type) => [type, [] as Post[]]),
+  ) as Record<PostType, Post[]>;
+
+  for (const value of posts) {
+    postTypes[value.type].push(value);
+  }
+  return postTypes;
+}
 
 export function useHomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    fetchProducts().then(setProducts);
-  }, []);
+    async function loadHomeData() {
+      const [fetchedProducts, fetchedPosts] = await Promise.all([
+        fetchProducts(),
+        fetchPost(),
+      ]);
 
-  useEffect(() => {
-    fetchPost().then(setPosts);
+      setProducts(fetchedProducts);
+      setPosts(fetchedPosts);
+    }
+
+    void loadHomeData();
   }, []);
 
   const destaques = products.filter(
     (product) => product.location === "FEATURED",
   );
 
-  const category = posts.filter((post) => post.type === PostType.CATEGORY);
+  const postsByType = postManager(posts);
 
-  return { destaques, category };
+  return {
+    destaques,
+    postsByType,
+  };
 }
 
-// export const CATEGORIES = [
-//   {
-//     index: "01",
-//     name: "Action Figures",
-//     imageUrl: "/assets/img/1.png",
-//     tall: true,
-//     href: "/colecao?categoria=fantasia",
-//   },
-//   {
-//     index: "02",
-//     name: "Estátuas",
-//     imageUrl: null,
-//     tall: false,
-//     href: "/colecao",
-//   },
-//   {
-//     index: "03",
-//     name: "Mechas",
-//     imageUrl: "/assets/img/6.png",
-//     tall: true,
-//     href: "/colecao?categoria=scifi",
-//   },
-//   {
-//     index: "04",
-//     name: "Bustos",
-//     imageUrl: null,
-//     tall: false,
-//     href: "/colecao",
-//   },
-//   {
-//     index: "05",
-//     name: "Dioramas",
-//     imageUrl: "/assets/img/7.png",
-//     tall: true,
-//     href: "/colecao#dioramas",
-//   },
-//   {
-//     index: "06",
-//     name: "Toy Art",
-//     imageUrl: null,
-//     tall: false,
-//     href: "/colecao",
-//   },
-//   {
-//     index: "07",
-//     name: "Personalizados",
-//     imageUrl: null,
-//     tall: false,
-//     href: "/personalizados",
-//   },
-// ];
+type CarouselDirection = -1 | 1;
+
+export function useFeaturedCarousel(itemCount: number) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [canScrollPrevious, setCanScrollPrevious] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  const updateControls = useCallback(() => {
+    const track = trackRef.current;
+
+    if (!track) return;
+
+    const endPosition = track.scrollWidth - track.clientWidth;
+    const tolerance = 2;
+
+    setCanScrollPrevious(track.scrollLeft > tolerance);
+    setCanScrollNext(track.scrollLeft < endPosition - tolerance);
+  }, []);
+
+  const scrollOneItem = useCallback((direction: CarouselDirection) => {
+    const track = trackRef.current;
+    const firstItem = track?.firstElementChild as HTMLElement | null;
+
+    if (!track || !firstItem) return;
+
+    const styles = window.getComputedStyle(track);
+    const gap = Number.parseFloat(styles.columnGap) || 0;
+
+    track.scrollBy({
+      left: direction * (firstItem.offsetWidth + gap),
+      behavior: "smooth",
+    });
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+
+    if (!track) return;
+
+    const resizeObserver = new ResizeObserver(updateControls);
+    const animationFrame = window.requestAnimationFrame(updateControls);
+
+    resizeObserver.observe(track);
+    track.addEventListener("scroll", updateControls, { passive: true });
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      track.removeEventListener("scroll", updateControls);
+    };
+  }, [itemCount, updateControls]);
+
+  return {
+    trackRef,
+    canScrollPrevious,
+    canScrollNext,
+    scrollOneItem,
+  };
+}

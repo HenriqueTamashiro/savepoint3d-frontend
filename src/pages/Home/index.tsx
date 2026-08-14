@@ -1,4 +1,4 @@
-import { useHomePage } from "./handler";
+import { useFeaturedCarousel, useHomePage, postManager } from "./handler";
 import ProductCard from "../../components/ProductCard";
 import CategoryCard from "../../components/CategoryCard";
 import StyledFigures from "../../components/StyledFigures";
@@ -15,7 +15,18 @@ interface HomeProps {
 }
 
 export default function Home({ onAddToCart }: HomeProps) {
-  const { destaques, category } = useHomePage();
+  const { destaques, postsByType } = useHomePage();
+  const {
+    CATEGORY: category,
+    ARTICLE: articles,
+    PRODUCT: productPosts,
+    FIGURE: figure,
+    PROJECT: project,
+    VIDEO: video,
+  } = postsByType;
+
+  const { trackRef, canScrollPrevious, canScrollNext, scrollOneItem } =
+    useFeaturedCarousel(destaques.length);
 
   return (
     <>
@@ -69,15 +80,37 @@ export default function Home({ onAddToCart }: HomeProps) {
             totalmente personalizada.
           </p>
         </div>
-        <div className={styles.destaquesGrid}>
-          {destaques.map((p) => (
-            <ProductCard
-              key={p.id}
-              product={p}
-              onAddToCart={onAddToCart}
-              variant="light"
-            />
-          ))}
+        <div className={styles.destaquesCarousel}>
+          <div ref={trackRef} className={styles.destaquesGrid}>
+            {destaques.map((p) => (
+              <ProductCard
+                key={p.id}
+                product={p}
+                onAddToCart={onAddToCart}
+                variant="light"
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className={`${styles.carouselControl} ${styles.carouselControlPrevious}`}
+            aria-label="Mostrar produtos anteriores"
+            disabled={!canScrollPrevious}
+            onClick={() => scrollOneItem(-1)}
+          >
+            &#8249;
+          </button>
+
+          <button
+            type="button"
+            className={`${styles.carouselControl} ${styles.carouselControlNext}`}
+            aria-label="Mostrar próximos produtos"
+            disabled={!canScrollNext}
+            onClick={() => scrollOneItem(1)}
+          >
+            &#8250;
+          </button>
         </div>
       </section>
 
@@ -95,9 +128,9 @@ export default function Home({ onAddToCart }: HomeProps) {
       </section>
 
       <div id="personalizados">
-        <Personalizados />
+        <Personalizados article={articles} />
       </div>
-      <StyledFigures />
+      <StyledFigures figures={figure} />
       <PremiumCollection />
       <DioramaSection />
       <div id="processo">
