@@ -38,6 +38,7 @@
 }
 
 .checkoutButton {
+  border: 0;
   background: var(--color-ink);
   color: #f2f2f0;
   text-align: center;
@@ -46,11 +47,17 @@
   letter-spacing: 0.03em;
   text-transform: uppercase;
   padding: 16px;
+  cursor: pointer;
 }
 
 .checkoutButton:hover {
   background: var(--color-accent);
   color: var(--color-ink);
+}
+
+.checkoutButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .continueButton {

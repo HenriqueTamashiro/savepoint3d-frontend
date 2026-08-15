@@ -11,6 +11,9 @@ interface CartDrawerProps {
   onIncQty: (id: string) => void;
   onDecQty: (id: string) => void;
   onRemove: (id: string) => void;
+  couponCode: string;
+  onCouponApplied: (code: string) => void;
+  onCheckout: () => void;
 }
 
 export default function CartDrawer({
@@ -21,6 +24,9 @@ export default function CartDrawer({
   onIncQty,
   onDecQty,
   onRemove,
+  couponCode: initialCouponCode,
+  onCouponApplied,
+  onCheckout,
 }: CartDrawerProps) {
   const {
     lines,
@@ -29,7 +35,7 @@ export default function CartDrawer({
     setCouponCode,
     couponMessage,
     applyCoupon,
-  } = useCartDrawer(cart, products, onIncQty, onDecQty, onRemove);
+  } = useCartDrawer(cart, products, initialCouponCode, onCouponApplied);
 
   return (
     <>
@@ -102,9 +108,14 @@ export default function CartDrawer({
             <span>Subtotal</span>
             <span>{formatPrice(subtotal)}</span>
           </div>
-          <a href="/checkout" className={styles.checkoutButton}>
+          <button
+            type="button"
+            className={styles.checkoutButton}
+            onClick={onCheckout}
+            disabled={lines.length === 0}
+          >
             Finalizar compra
-          </a>
+          </button>
           <button
             type="button"
             onClick={onClose}

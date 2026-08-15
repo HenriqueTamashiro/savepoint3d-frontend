@@ -9,7 +9,9 @@ export function postManager(posts: Post[]): Record<PostType, Post[]> {
   ) as Record<PostType, Post[]>;
 
   for (const value of posts) {
-    postTypes[value.type].push(value);
+    if (value.show !== false) {
+      postTypes[value.type].push(value);
+    }
   }
   return postTypes;
 }
@@ -40,6 +42,7 @@ export function useHomePage() {
 
   return {
     destaques,
+    products,
     postsByType,
   };
 }

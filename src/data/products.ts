@@ -1,3 +1,5 @@
+import { Product } from "../types/product";
+
 // const api = import.meta.env.VITE_API_URL;
 
 // const response = await fetch(`${api}/users/posts`);
@@ -14,9 +16,10 @@ export const PRODUCTS: Product[] = [
     material: "Impressão 3D em PLA com pintura manual",
     price: 899.9,
     tag: "Edição limitada",
-    stock: "available",
+    stock: 1,
     imageUrl: "/assets/img/1.png",
     alt: "Crimson Ronin, guerreiro em armadura preta e vermelha com katana",
+    location: "FEATURED",
   },
   {
     id: "product-002",
@@ -27,9 +30,10 @@ export const PRODUCTS: Product[] = [
     material: "Impressão 3D em PLA com pintura manual",
     price: 749.9,
     tag: "Edição Jogos",
-    stock: "available",
+    stock: 1,
     imageUrl: "/assets/img/3.png",
     alt: "Neon Huntress, guerreira em armadura roxa com espada",
+    location: "FEATURED",
   },
   {
     id: "product-003",
@@ -40,9 +44,10 @@ export const PRODUCTS: Product[] = [
     material: "PLA de alta qualidade + base gravada",
     price: 1299.9,
     tag: "Sob encomenda",
-    stock: "preorder",
+    stock: 1,
     imageUrl: "/assets/img/5.png",
     alt: "Aurora Sentinel, guerreira com katana sobre base personalizada Save Point3D",
+    location: "FEATURED",
   },
   {
     id: "product-004",
@@ -53,9 +58,10 @@ export const PRODUCTS: Product[] = [
     material: "PLA de alta qualidade + detalhes metálicos",
     price: 1599.9,
     tag: "Série Dark Queen",
-    stock: "available",
+    stock: 1,
     imageUrl: "/assets/img/6.png",
     alt: "Titan Mech, mecha de combate em metal escuro",
+    location: null,
   },
   {
     id: "product-005",
@@ -66,8 +72,9 @@ export const PRODUCTS: Product[] = [
     material: "Impressão 3D em PLA com pintura manual",
     price: 1099.9,
     tag: "Fantasia Sombria",
-    stock: "available",
+    stock: 1,
     imageUrl: "/assets/img/7.png",
     alt: "Shadow Knight, guerreiro sombrio com espada e troféu",
+    location: null,
   },
 ];

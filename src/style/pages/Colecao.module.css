@@ -3,8 +3,8 @@
 .dioramaOverlay { position: absolute; inset: 0; background: linear-gradient(0deg, #111111 12%, rgba(17,17,17,0.05) 55%); }
 .dioramaContent { position: relative; z-index: 2; padding: 64px 56px; max-width: 640px; color: #F2F2F0; }
 .sectionNumber { font-size: 13px; color: var(--color-accent); font-weight: 700; letter-spacing: 0.04em; }
-.dioramaContent h2 { margin: 16px 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; line-height: 1; }
-.dioramaContent p { font-size: 16px; line-height: 1.7; color: #D8D8D5; max-width: 480px; margin: 0 0 28px; }
+.dioramaContent h2 { margin: 16px 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; line-height: 1; white-space: pre-wrap; }
+.dioramaContent p { font-size: 16px; line-height: 1.7; color: #D8D8D5; max-width: 480px; margin: 0 0 28px; white-space: pre-wrap; }
 .ctaButton { background: var(--color-accent); color: var(--color-ink); font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 16px 30px; display: inline-block; }
 
 .section { padding: 0 56px 120px; max-width: 1600px; margin: 0 auto; }

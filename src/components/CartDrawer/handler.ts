@@ -2,16 +2,16 @@ import { useMemo, useState } from 'react';
 import { CartLine, Product } from '../../types/product';
 import { applyCoupon as applyCouponApi } from '../../services/api';
 
-export function useCartDrawer(cart: CartLine[], products: Product[], onIncQty: (id: string) => void, onDecQty: (id: string) => void, onRemove: (id: string) => void) {
-  const [couponCode, setCouponCode] = useState('');
+export function useCartDrawer(cart: CartLine[], products: Product[], initialCouponCode: string, onCouponApplied: (code: string) => void) {
+  const [couponCode, setCouponCode] = useState(initialCouponCode);
   const [couponMessage, setCouponMessage] = useState('');
   const [discount, setDiscount] = useState(0);
 
   const lines = useMemo(
     () =>
-      cart.map((line) => {
-        const product = products.find((p) => p.id === line.id)!;
-        return { ...line, product, lineTotal: product.price * line.qty };
+      cart.flatMap((line) => {
+        const product = products.find((p) => p.id === line.id);
+        return product ? [{ ...line, product, lineTotal: product.price * line.qty }] : [];
       }),
     [cart, products]
   );
@@ -23,12 +23,14 @@ export function useCartDrawer(cart: CartLine[], products: Product[], onIncQty: (
     const res = await applyCouponApi(couponCode);
     if (res.valid) {
       setDiscount(res.discount);
+      onCouponApplied(couponCode.trim().toUpperCase());
       setCouponMessage('Cupom aplicado — 10% de desconto.');
     } else {
       setDiscount(0);
+      onCouponApplied('');
       setCouponMessage('Cupom inválido ou expirado.');
     }
   }
 
-  return { lines, subtotal, couponCode, setCouponCode, couponMessage, applyCoupon, onIncQty, onDecQty, onRemove };
+  return { lines, subtotal, couponCode, setCouponCode, couponMessage, applyCoupon };
 }

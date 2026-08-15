@@ -1,4 +1,4 @@
-import { useFeaturedCarousel, useHomePage, postManager } from "./handler";
+import { useFeaturedCarousel, useHomePage } from "./handler";
 import ProductCard from "../../components/ProductCard";
 import CategoryCard from "../../components/CategoryCard";
 import StyledFigures from "../../components/StyledFigures";
@@ -15,15 +15,15 @@ interface HomeProps {
 }
 
 export default function Home({ onAddToCart }: HomeProps) {
-  const { destaques, postsByType } = useHomePage();
+  const { destaques, products, postsByType } = useHomePage();
   const {
     CATEGORY: category,
     ARTICLE: articles,
-    PRODUCT: productPosts,
     FIGURE: figure,
     PROJECT: project,
     VIDEO: video,
   } = postsByType;
+  const hero = video.find((item) => item.tag?.toUpperCase() === "HERO") ?? video[0];
 
   const { trackRef, canScrollPrevious, canScrollNext, scrollOneItem } =
     useFeaturedCarousel(destaques.length);
@@ -32,8 +32,8 @@ export default function Home({ onAddToCart }: HomeProps) {
     <>
       <section id="top" className={styles.hero}>
         <video
-          src="/assets/video/hero-video.mp4"
-          poster="/assets/img/4.png"
+          src={hero?.url ?? "/assets/video/hero-video.mp4"}
+          poster={hero?.imageUrl ?? "/assets/img/4.png"}
           autoPlay
           loop
           muted
@@ -43,16 +43,10 @@ export default function Home({ onAddToCart }: HomeProps) {
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <span className={styles.heroKicker}>Save Point3D — Coleção 2026</span>
-          <h1>
-            Seu Universo
-            <br />
-            Favorito
-            <br />
-            Fora da Tela.
-          </h1>
+          <h1>{hero?.title ?? "Seu Universo Favorito Fora da Tela."}</h1>
           <p>
-            Action figures, estátuas e peças personalizadas produzidas em
-            impressão 3D e finalizadas à mão.
+            {hero?.content ??
+              "Action figures, estátuas e peças personalizadas produzidas em impressão 3D e finalizadas à mão."}
           </p>
           <div className={styles.heroActions}>
             <a href="#destaques" className={styles.primaryButton}>
@@ -131,10 +125,10 @@ export default function Home({ onAddToCart }: HomeProps) {
         <Personalizados article={articles} />
       </div>
       <StyledFigures figures={figure} />
-      <PremiumCollection />
-      <DioramaSection />
+      <PremiumCollection products={products} />
+      <DioramaSection projects={project} />
       <div id="processo">
-        <Processo />
+        <Processo projects={project} />
       </div>
       <LancamentosSection onAddToCart={onAddToCart} />
       <div id="experiencia">

@@ -15,4 +15,6 @@ export interface Post {
   type: PostType;
   tag: string | null;
   imageUrl: string | null;
+  url?: string | null;
+  show?: boolean;
 }

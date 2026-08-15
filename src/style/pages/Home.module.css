@@ -51,6 +51,7 @@
   line-height: 0.94;
   letter-spacing: -0.03em;
   text-transform: uppercase;
+  white-space: pre-wrap;
 }
 .heroContent p {
   margin: 0;
@@ -58,6 +59,7 @@
   font-size: 18px;
   line-height: 1.6;
   color: #b8b8b4;
+  white-space: pre-wrap;
 }
 .heroActions {
   display: flex;

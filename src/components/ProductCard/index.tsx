@@ -32,7 +32,9 @@ export default function ProductCard({
           className={styles.image}
         />
         <span className={styles.tag}>{product.tag}</span>
-        <span className={styles.stock}>{product.stock} Uni.</span>
+        <span className={styles.stock}>
+          {product.stock === null ? "Sob encomenda" : `${product.stock} Uni.`}
+        </span>
       </div>
       <div className={styles.body}>
         <span className={styles.meta}>
@@ -46,8 +48,9 @@ export default function ProductCard({
             type="button"
             onClick={() => onAddToCart(product.id)}
             className={styles.addButton}
+            disabled={product.stock === 0}
           >
-            Adicionar
+            {product.stock === 0 ? "Esgotado" : "Adicionar"}
           </button>
         </div>
       </div>

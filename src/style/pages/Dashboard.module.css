@@ -1,0 +1,102 @@
+.dashboard { min-height: 100vh; display: grid; grid-template-columns: 240px minmax(330px, 410px) minmax(430px, 1fr); background: #ecece8; color: #111; transition: grid-template-columns .25s ease; }
+.dashboard.menuCollapsed { grid-template-columns: 64px minmax(330px, 410px) minmax(430px, 1fr); }
+.sidebar { background: #111; color: #f5f5f1; padding: 22px 18px; display: flex; flex-direction: column; min-height: 100vh; overflow: hidden; }
+.menuActions { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.menuActions button { height: 36px; border: 1px solid #343430; background: #1b1b19; color: #fff; cursor: pointer; }
+.menuActions button:hover { border-color: #b6ff1a; color: #b6ff1a; }
+.backButton { display: flex; align-items: center; gap: 9px; padding: 0 12px; font-size: 10px; text-transform: uppercase; }
+.backButton b { font-size: inherit; }
+.collapseButton { width: 36px; flex: none; font-size: 20px; }
+.menuCollapsed .sidebar { padding-inline: 13px; }
+.menuCollapsed .sidebarIntro, .menuCollapsed .sectionNav, .menuCollapsed .backButton { display: none; }
+.menuCollapsed .menuActions { justify-content: center; }
+.brand { color: #fff; font-size: 19px; font-weight: 900; letter-spacing: -.04em; }
+.brand span { color: #b6ff1a; }
+.sidebarIntro { margin: 8px 8px 30px; }
+.sidebarIntro > span, .panelHeader span, .previewHeader span { color: #85857f; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.sidebarIntro h1, .sidebarIntro h2 { font-size: 24px; line-height: 1; margin: 9px 0 12px; text-transform: uppercase; }
+.sidebarIntro p { color: #999994; font-size: 13px; line-height: 1.55; }
+.sectionNav { display: grid; gap: 5px; }
+.sectionNav button { width: 100%; display: flex; gap: 13px; text-align: left; color: #aaa; background: transparent; border: 1px solid transparent; padding: 13px 12px; cursor: pointer; }
+.sectionNav button > span { color: #64645f; font-size: 10px; padding-top: 3px; }
+.sectionNav button div { display: grid; gap: 3px; }
+.sectionNav b { color: inherit; font-size: 13px; }
+.sectionNav small { color: #666661; font-size: 10px; line-height: 1.3; }
+.sectionNav button:hover, .sectionNav .activeSection { border-color: #343430; background: #1b1b19; color: #fff; }
+.sectionNav .activeSection > span { color: #b6ff1a; }
+.sidebarFooter { margin: auto 8px 0; display: grid; gap: 13px; }
+.account { display: flex; align-items: center; gap: 10px; border-top: 1px solid #30302d; padding-top: 17px; }
+.account > span { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 50%; background: #b6ff1a; color: #111; font-size: 12px; font-weight: 900; }
+.account div { display: grid; gap: 2px; min-width: 0; }
+.account b { overflow: hidden; color: #fff; font-size: 11px; text-overflow: ellipsis; }
+.account small { color: #686863; font-size: 9px; text-transform: uppercase; }
+.storeLink { color: #aaa; font-size: 11px; }
+.logoutButton { padding: 0; border: 0; background: transparent; color: #777; font-size: 10px; text-align: left; text-transform: uppercase; cursor: pointer; }
+.logoutButton:hover { color: #b6ff1a; }
+.editorPanel { background: #f6f6f3; border-right: 1px solid #d5d5d0; min-height: 100vh; }
+.panelHeader, .previewHeader { height: 90px; border-bottom: 1px solid #d5d5d0; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; }
+.panelHeader h2 { margin: 4px 0 0; font-size: 20px; }
+.status { display: flex; align-items: center; gap: 7px; color: #6c6c67 !important; letter-spacing: .04em !important; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: #b6ff1a; box-shadow: 0 0 0 3px #dfffa0; }
+.form { padding: 30px 28px; display: grid; gap: 23px; }
+.form label { display: grid; gap: 8px; font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.form input:not([type="checkbox"]), .form textarea { width: 100%; border: 1px solid #cecec8; background: #fff; padding: 13px 14px; font: inherit; font-size: 14px; line-height: 1.5; resize: vertical; outline: none; }
+.form input:focus, .form textarea:focus { border-color: #111; box-shadow: 0 0 0 2px rgba(182,255,26,.35); }
+.form label > small { color: #999992; font-size: 9px; text-align: right; font-weight: 500; }
+.imageField { display: grid; gap: 9px; }
+.imageField > small { color: #85857f; font-size: 9px; }
+.uploadButton { width: max-content; padding: 11px 14px; border: 1px solid #111; background: #fff; color: #111; cursor: pointer; }
+.uploadButton:hover { background: #111; color: #fff; }
+.uploadButton input { position: absolute; width: 1px !important; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+.visibilityField { display: flex !important; align-items: center; justify-content: space-between; border-top: 1px solid #deded9; border-bottom: 1px solid #deded9; padding: 18px 0; }
+.visibilityField span { display: grid; gap: 5px; }
+.visibilityField small { color: #85857f; font-size: 10px; font-weight: 400; letter-spacing: 0; text-transform: none; }
+.visibilityField input { appearance: none; width: 42px; height: 23px; border-radius: 20px; background: #c4c4bf; padding: 3px; cursor: pointer; }
+.visibilityField input::before { content: ""; display: block; width: 17px; height: 17px; border-radius: 50%; background: #fff; transition: transform .2s; }
+.visibilityField input:checked { background: #111; }
+.visibilityField input:checked::before { transform: translateX(19px); background: #b6ff1a; }
+.formActions { display: flex; justify-content: flex-end; gap: 9px; }
+.formActions button { border: 0; padding: 13px 17px; font-size: 11px; font-weight: 800; text-transform: uppercase; cursor: pointer; }
+.resetButton { background: transparent; color: #666; }
+.saveButton { background: #111; color: #fff; }
+.saveButton:hover { background: #b6ff1a; color: #111; }
+.message { margin: -10px 0 0; padding: 11px; background: #e7fbc0; font-size: 11px; }
+.loading { padding: 30px; color: #777; }
+.previewPanel { min-width: 0; min-height: 100vh; display: grid; grid-template-rows: 90px 1fr 54px; }
+.previewHeader strong { display: block; margin-top: 4px; font-size: 14px; }
+.viewportControls { background: #deded9; padding: 3px; display: flex; }
+.viewportControls button { border: 0; background: transparent; color: #777; padding: 7px 10px; font-size: 10px; font-weight: 700; cursor: pointer; }
+.viewportControls .activeViewport { background: #fff; color: #111; box-shadow: 0 1px 4px #bbb; }
+.previewStage { min-height: 0; padding: 34px; display: flex; align-items: center; justify-content: center; background-image: radial-gradient(#c7c7c1 1px, transparent 1px); background-size: 18px 18px; overflow: auto; }
+.previewFrame { width: min(100%, 960px); aspect-ratio: 16 / 10; background: #f2f2f0; box-shadow: 0 18px 60px rgba(0,0,0,.16); overflow: hidden; transition: width .25s, aspect-ratio .25s; }
+.previewFrame.mobileFrame { width: min(360px, 100%); aspect-ratio: 9 / 16; }
+.componentPreview { height: 100%; position: relative; overflow: hidden; }
+.componentPreview img { width: 100%; height: 100%; object-fit: cover; }
+.previewShade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.9), rgba(0,0,0,.15)); }
+.heroCopy, .overlayCopy { position: absolute; inset: 0; padding: clamp(28px, 6vw, 72px); color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+.heroCopy span, .overlayCopy > span, .splitCopy > span { color: #b6ff1a; font-size: 9px; font-weight: 800; }
+.heroCopy h1, .overlayCopy h2, .splitCopy h2 { max-width: 620px; font-size: clamp(30px, 5vw, 68px); line-height: .92; text-transform: uppercase; margin: 12px 0 18px; letter-spacing: -.04em; white-space: pre-wrap; }
+.heroCopy p, .overlayCopy p, .splitCopy p { max-width: 430px; color: #d0d0ca; font-size: clamp(10px, 1.5vw, 15px); line-height: 1.55; white-space: pre-wrap; }
+.componentPreview button { margin-top: 16px; border: 0; background: #b6ff1a; color: #111; padding: 11px 15px; font-size: 9px; font-weight: 900; text-transform: uppercase; }
+.dioramaPreview .previewShade { background: linear-gradient(90deg, rgba(0,0,0,.88), rgba(0,0,0,.1)); }
+.splitPreview { display: grid; grid-template-columns: 1fr 1fr; }
+.splitImage { min-width: 0; overflow: hidden; background: #181818; }
+.splitImage img { object-fit: contain; }
+.splitCopy { padding: clamp(22px, 4vw, 52px); display: flex; flex-direction: column; justify-content: center; background: #f2f2f0; }
+.splitCopy h2 { font-size: clamp(24px, 4vw, 50px); }
+.splitCopy p { color: #676762; }
+.miniSteps { margin-top: 18px; border-top: 1px solid #d2d2cd; }
+.miniSteps div { display: flex; gap: 14px; border-bottom: 1px solid #d2d2cd; padding: 8px 0; font-size: 9px; }
+.miniSteps b { color: #777; }
+.hiddenPreview { height: 100%; display: grid; place-content: center; text-align: center; color: #888; }
+.hiddenPreview span { color: #111; font-size: 20px; font-weight: 900; text-transform: uppercase; }
+.hiddenPreview p { font-size: 12px; }
+.previewFooter { border-top: 1px solid #d5d5d0; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; color: #777; font-size: 10px; }
+.previewFooter a { color: #111; font-weight: 800; }
+.mobileFrame .splitPreview { grid-template-columns: 1fr; grid-template-rows: 42% 58%; }
+.mobileFrame .heroCopy, .mobileFrame .overlayCopy { padding: 28px 22px; justify-content: flex-end; }
+.mobileFrame .heroCopy h1, .mobileFrame .overlayCopy h2 { font-size: 34px; }
+.mobileFrame .previewShade { background: linear-gradient(0deg, rgba(0,0,0,.92), rgba(0,0,0,.05)); }
+@media (max-width: 1350px) { .dashboard { grid-template-columns: 210px minmax(320px, 390px); } .dashboard.menuCollapsed { grid-template-columns: 64px minmax(320px, 390px); } .previewPanel { grid-column: 1 / -1; min-height: 720px; } .sidebar { padding-inline: 12px; } .previewStage { padding: 20px; } }
+@media (max-width: 900px) { .dashboard { grid-template-columns: 190px 1fr; } .dashboard.menuCollapsed { grid-template-columns: 64px 1fr; } }
+@media (max-width: 650px) { .dashboard, .dashboard.menuCollapsed { display: block; } .sidebar, .menuCollapsed .sidebar { min-height: auto; padding: 14px 16px; } .menuCollapsed .sidebarIntro, .menuCollapsed .sectionNav, .menuCollapsed .backButton { display: initial; } .menuCollapsed .sectionNav { display: grid; } .menuCollapsed .backButton { display: flex; } .menuActions { justify-content: space-between !important; } .sidebarIntro { margin-top: 28px; } .editorPanel { min-height: auto; } .previewPanel { min-height: 650px; } .previewStage { padding: 16px; } }

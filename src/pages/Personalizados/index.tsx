@@ -3,18 +3,21 @@ import styles from "../../style/pages/Personalizados.module.css";
 import { Post } from "../../types/post";
 
 interface CustomProps {
-  article: Post[];
+  article?: Post[];
 }
 
-export default function Personalizados({ article }: CustomProps) {
-  const item = article.find((item) => item.type === "ARTICLE");
+export default function Personalizados({ article = [] }: CustomProps) {
+  const item = article.find((item) => item.tag?.toUpperCase() === "PERSONALIZADOS") ?? article[0];
   return (
     <section className={styles.section}>
       <div className={styles.content}>
         <span className={styles.sectionNumber}>05 —</span>
 
-        <h2>{item?.title}</h2>
-        <p>{item?.content}</p>
+        <h2>{item?.title ?? "Sua ideia. Seu personagem. Sua peça."}</h2>
+        <p>
+          {item?.content ??
+            "Transformamos fotos, personagens, referências e ideias em peças exclusivas produzidas especialmente para você."}
+        </p>
         <a href="/contato" className={styles.ctaButton}>
           Solicitar orçamento
         </a>
@@ -29,7 +32,7 @@ export default function Personalizados({ article }: CustomProps) {
       </div>
       <div className={styles.imageWrap}>
         <img
-          src={item?.imageUrl ?? "IMG"}
+          src={item?.imageUrl ?? "/assets/img/personalizados-hero.png"}
           alt="Guerreiro estilizado em armadura escura, referência para peças personalizadas"
         />
       </div>

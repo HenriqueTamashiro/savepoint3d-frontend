@@ -1,20 +1,27 @@
 import { useColecaoPage, FILTERS } from './handler';
 import ProductCard from '../../components/ProductCard';
+import { Post } from '../../types/post';
 import styles from '../../style/pages/Colecao.module.css';
 
 interface ColecaoProps {
   onAddToCart: (id: string) => void;
 }
 
-export function DioramaSection() {
+interface DioramaSectionProps {
+  projects?: Post[];
+}
+
+export function DioramaSection({ projects = [] }: DioramaSectionProps) {
+  const project = projects.find((item) => item.tag?.toUpperCase() === 'DIORAMA');
+
   return (
     <section className={styles.dioramaHero} id="dioramas">
-      <img src="/assets/img/7.png" alt="Diorama de guerreiro sombrio empunhando espada e troféu, peça colecionável Save Point3D" />
+      <img src={project?.imageUrl ?? "/assets/img/7.png"} alt={project?.title ?? "Diorama colecionável Save Point3D"} />
       <div className={styles.dioramaOverlay} />
       <div className={styles.dioramaContent}>
         <span className={styles.sectionNumber}>08 —</span>
-        <h2>Uma cena inteira<br />na sua estante.</h2>
-        <p>Dioramas desenvolvidos para transformar momentos épicos em peças colecionáveis cheias de movimento, profundidade e detalhes.</p>
+        <h2>{project?.title ?? "Uma cena inteira na sua estante."}</h2>
+        <p>{project?.content ?? "Dioramas desenvolvidos para transformar momentos épicos em peças colecionáveis cheias de movimento, profundidade e detalhes."}</p>
         <a href="#lancamentos" className={styles.ctaButton}>Explorar dioramas</a>
       </div>
     </section>

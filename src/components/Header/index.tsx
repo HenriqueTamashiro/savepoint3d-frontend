@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useHeader } from './handler';
+import { getAuthSession } from '../../services/auth';
 import styles from '../../style/components/Header';
 
 interface HeaderProps {
@@ -34,6 +35,12 @@ function MenuIcon() {
 
 export default function Header({ cartCount, onOpenCart }: HeaderProps) {
   const { isMobile, menuOpen, scrolled, toggleMenu } = useHeader();
+  const session = getAuthSession();
+  const accountPath = !session
+    ? '/login'
+    : session.role.toLowerCase() === 'admin'
+      ? '/dashboard'
+      : '/minha-conta';
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.headerScrolled : ''}`}>
@@ -56,7 +63,7 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
           {!isMobile && (
             <>
               <button type="button" aria-label="Buscar" className={styles.iconButton}><SearchIcon /></button>
-              <button type="button" aria-label="Minha conta" className={styles.iconButton}><AccountIcon /></button>
+              <Link to={accountPath} aria-label="Minha conta" className={styles.iconButton}><AccountIcon /></Link>
             </>
           )}
           <button type="button" onClick={onOpenCart} aria-label="Abrir carrinho" className={styles.iconButton}>
@@ -78,6 +85,9 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
                 {link.label}
               </a>
             ))}
+            <Link to={accountPath} onClick={toggleMenu} className={styles.mobileNavLink}>
+              {!session ? 'Entrar' : accountPath === '/dashboard' ? 'Dashboard' : 'Minha conta'}
+            </Link>
           </nav>
         </div>
       )}

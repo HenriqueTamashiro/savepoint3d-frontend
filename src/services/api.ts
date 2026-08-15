@@ -1,11 +1,15 @@
 import { Product, ApiProduct } from "../types/product";
-import { Post } from "../types/post";
+import { Post, PostType } from "../types/post";
+import { getAuthSession } from "./auth";
 
 // Stub service layer. Swap the bodies below for real fetch() calls to your backend
 // once the API exists (e.g. GET /api/products, POST /api/cart, POST /api/leads).
 
-export async function fetchProducts(): Promise<Product[]> {
-  const Item = await fetch("/api/Teste/post/items");
+export async function fetchProducts(category?: string): Promise<Product[]> {
+  const params = new URLSearchParams();
+  if (category) params.set("category", category);
+  const query = params.size ? `?${params.toString()}` : "";
+  const Item = await fetch(`/api/items${query}`);
 
   if (!Item.ok) {
     throw new Error("Erro");
@@ -26,20 +30,68 @@ export async function fetchProducts(): Promise<Product[]> {
   });
 }
 
-export async function fetchPost(): Promise<Post[]> {
-  const Post = await fetch("/api/Teste/post");
+export async function fetchPost(filters: { type?: PostType; category?: string } = {}): Promise<Post[]> {
+  const params = new URLSearchParams();
+  if (filters.type) params.set("type", filters.type);
+  if (filters.category) params.set("category", filters.category);
+  const query = params.size ? `?${params.toString()}` : "";
+  const Post = await fetch(`/api/posts${query}`);
 
   if (!Post.ok) {
     throw new Error("Erro");
   }
 
-  const dataTyped: Post[] = await Post.json();
+  return Post.json() as Promise<Post[]>;
+}
 
-  return dataTyped.map((Posts) => {
-    return {
-      ...Posts,
-    };
+async function readApiError(response: Response): Promise<string> {
+  try {
+    const data = (await response.json()) as { message?: string | string[] };
+    return Array.isArray(data.message) ? data.message.join(" ") : data.message ?? "Não foi possível concluir a operação.";
+  } catch {
+    return "Não foi possível concluir a operação.";
+  }
+}
+
+function adminHeaders(contentType = true): HeadersInit {
+  const token = getAuthSession()?.accessToken;
+  if (!token) throw new Error("Sua sessão expirou. Entre novamente.");
+  return {
+    Authorization: `Bearer ${token}`,
+    ...(contentType ? { "Content-Type": "application/json" } : {}),
+  };
+}
+
+export async function persistPost(post: Post): Promise<Post> {
+  const isNew = post.id.startsWith("local-");
+  const response = await fetch(isNew ? "/api/posts" : `/api/posts/${post.id}`, {
+    method: isNew ? "POST" : "PATCH",
+    headers: adminHeaders(),
+    body: JSON.stringify({
+      title: post.title,
+      content: post.content ?? "",
+      type: post.type,
+      tag: post.tag ?? "",
+      imageUrl: post.imageUrl || undefined,
+      url: post.url || undefined,
+      show: post.show !== false,
+    }),
   });
+  if (!response.ok) throw new Error(await readApiError(response));
+  return response.json() as Promise<Post>;
+}
+
+export async function uploadPostImage(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("image", file);
+  const response = await fetch("/api/uploads/images", {
+    method: "POST",
+    headers: adminHeaders(false),
+    body: formData,
+  });
+  if (!response.ok) throw new Error(await readApiError(response));
+  const data = (await response.json()) as { url: string };
+  return data.url;
 }
 
 export async function submitCustomRequest(payload: {
