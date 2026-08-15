@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -21,12 +27,18 @@ import { fetchProducts } from "./services/api";
 function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isPrivateSurface = ["/dashboard", "/minha-conta", "/checkout", "/login", "/cadastro"].some((path) =>
-    location.pathname.startsWith(path),
-  );
+  const isPrivateSurface = [
+    "/dashboard",
+    "/minha-conta",
+    "/checkout",
+    "/login",
+    "/cadastro",
+  ].some((path) => location.pathname.startsWith(path));
   const [cart, setCart] = useState<CartLine[]>(() => {
     try {
-      return JSON.parse(window.localStorage.getItem("savepoint3d:cart") ?? "[]") as CartLine[];
+      return JSON.parse(
+        window.localStorage.getItem("savepoint3d:cart") ?? "[]",
+      ) as CartLine[];
     } catch {
       return [];
     }
@@ -36,11 +48,15 @@ function AppContent() {
   const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
-    fetchProducts().then((fetchedProducts) => {
-      setProducts(fetchedProducts);
-      const productIds = new Set(fetchedProducts.map((product) => product.id));
-      setCart((current) => current.filter((line) => productIds.has(line.id)));
-    }).catch(() => setProducts([]));
+    fetchProducts()
+      .then((fetchedProducts) => {
+        setProducts(fetchedProducts);
+        const productIds = new Set(
+          fetchedProducts.map((product) => product.id),
+        );
+        setCart((current) => current.filter((line) => productIds.has(line.id)));
+      })
+      .catch(() => setProducts([]));
   }, []);
 
   useEffect(() => {
@@ -52,7 +68,13 @@ function AppContent() {
     if (product?.stock === 0) return;
     setCart((prev) => {
       const existing = prev.find((c) => c.id === id);
-      if (product?.stock !== null && product?.stock !== undefined && existing && existing.qty >= product.stock) return prev;
+      if (
+        product?.stock !== null &&
+        product?.stock !== undefined &&
+        existing &&
+        existing.qty >= product.stock
+      )
+        return prev;
       return existing
         ? prev.map((c) => (c.id === id ? { ...c, qty: c.qty + 1 } : c))
         : [...prev, { id, qty: 1 }];
@@ -64,7 +86,8 @@ function AppContent() {
     const product = products.find((item) => item.id === id);
     setCart((prev) =>
       prev.map((c) =>
-        c.id === id && (product?.stock === null || c.qty < (product?.stock ?? 0))
+        c.id === id &&
+        (product?.stock === null || c.qty < (product?.stock ?? 0))
           ? { ...c, qty: c.qty + 1 }
           : c,
       ),
@@ -86,7 +109,9 @@ function AppContent() {
 
   return (
     <>
-      {!isPrivateSurface && <Header cartCount={cartCount} onOpenCart={() => setCartOpen(true)} />}
+      {!isPrivateSurface && (
+        <Header cartCount={cartCount} onOpenCart={() => setCartOpen(true)} />
+      )}
       <Routes>
         <Route path="/" element={<Home onAddToCart={addToCart} />} />
         <Route path="/personalizados" element={<Personalizados />} />
@@ -103,18 +128,29 @@ function AppContent() {
                 cart={cart}
                 products={products}
                 couponCode={couponCode}
-                onComplete={() => { setCart([]); setCouponCode(""); }}
+                onComplete={() => {
+                  setCart([]);
+                  setCouponCode("");
+                }}
               />
             </RequireAuth>
           }
         />
         <Route
           path="/minha-conta"
-          element={<RequireAuth><Account /></RequireAuth>}
+          element={
+            <RequireAuth>
+              <Account />
+            </RequireAuth>
+          }
         />
         <Route
           path="/dashboard"
-          element={<RequireAuth roles={["ADMIN"]}><Account initialTab="admin" /></RequireAuth>}
+          element={
+            <RequireAuth roles={["ADMIN"]}>
+              <Account initialTab="admin" />
+            </RequireAuth>
+          }
         />
       </Routes>
       {!isPrivateSurface && (
@@ -133,7 +169,10 @@ function AppContent() {
             onRemove={removeFromCart}
             couponCode={couponCode}
             onCouponApplied={setCouponCode}
-            onCheckout={() => { setCartOpen(false); navigate("/checkout"); }}
+            onCheckout={() => {
+              setCartOpen(false);
+              navigate("/checkout");
+            }}
           />
         </>
       )}
