@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useHeader } from "./handler";
-import { getAuthSession } from "../../services/auth";
+import { getAuthSession, logout } from "../../services/auth";
 import styles from "../../style/components/Header";
 
 interface HeaderProps {
@@ -89,13 +90,25 @@ function MenuIcon() {
 }
 
 export default function Header({ cartCount, onOpenCart }: HeaderProps) {
-  const { isMobile, menuOpen, scrolled, toggleMenu } = useHeader();
-  const session = getAuthSession();
-  const accountPath = !session
-    ? "/login"
-    : session.role.toLowerCase() === "admin"
-      ? "/dashboard"
-      : "/minha-conta";
+  const navigate = useNavigate();
+  const {
+    isMobile,
+    menuOpen,
+    accountMenuOpen,
+    scrolled,
+    accountMenuRef,
+    toggleMenu,
+    toggleAccountMenu,
+    closeAccountMenu,
+  } = useHeader();
+  const [session, setSession] = useState(() => getAuthSession());
+
+  function signOut() {
+    logout();
+    setSession(null);
+    closeAccountMenu();
+    navigate("/", { replace: true });
+  }
 
   return (
     <header
@@ -145,25 +158,37 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
               <span className={styles.cartBadge}>{cartCount}</span>
             )}
           </button>
-          {!isMobile && (
-            <Link
-              to={accountPath}
-              aria-label={session ? `Conta de ${session.user}` : "Entrar"}
-              title={session ? `Acessar conta de ${session.user}` : "Entrar"}
-              className={`${styles.iconButton} ${session ? styles.loggedAccount : ""}`}
-            >
-              {session ? (
-                <>
-                  <span className={styles.accountAvatar}>
-                    {session.user.slice(0, 1).toUpperCase()}
-                  </span>
-                  <span className={styles.accountName}>{session.user}</span>
-                </>
-              ) : (
-                <AccountIcon />
+          {!isMobile && (session ? (
+            <div className={styles.accountMenuWrap} ref={accountMenuRef}>
+              <button
+                type="button"
+                aria-label={`Abrir menu da conta de ${session.user}`}
+                aria-haspopup="menu"
+                aria-expanded={accountMenuOpen}
+                title={`Conta de ${session.user}`}
+                className={`${styles.iconButton} ${styles.loggedAccount}`}
+                onClick={toggleAccountMenu}
+              >
+                <span className={styles.accountAvatar}>{session.user.slice(0, 1).toUpperCase()}</span>
+                <span className={styles.accountName}>{session.user}</span>
+                <span className={`${styles.accountChevron} ${accountMenuOpen ? styles.accountChevronOpen : ""}`} aria-hidden="true">⌄</span>
+              </button>
+              {accountMenuOpen && (
+                <div className={styles.accountDropdown} role="menu">
+                  <div className={styles.accountDropdownHeader}>
+                    <span>{session.user.slice(0, 1).toUpperCase()}</span>
+                    <div><b>{session.user}</b><small>{session.role}</small></div>
+                  </div>
+                  <Link to="/minha-conta" state={{ tab: "overview" }} onClick={closeAccountMenu} role="menuitem">Perfil</Link>
+                  <Link to="/minha-conta" state={{ tab: "orders" }} onClick={closeAccountMenu} role="menuitem">Meus pedidos</Link>
+                  {session.role.toLowerCase() === "admin" && <Link to="/dashboard" onClick={closeAccountMenu} role="menuitem">Administração</Link>}
+                  <button type="button" onClick={signOut} role="menuitem">Sair da conta</button>
+                </div>
               )}
-            </Link>
-          )}
+            </div>
+          ) : (
+            <Link to="/login" aria-label="Entrar" title="Entrar" className={styles.iconButton}><AccountIcon /></Link>
+          ))}
           {isMobile && (
             <button
               type="button"
@@ -198,13 +223,12 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
                 {link.label}
               </a>
             ))}
-            <Link
-              to={accountPath}
-              onClick={toggleMenu}
-              className={styles.mobileNavLink}
-            >
-              {!session ? "Entrar" : session.user}
-            </Link>
+            {!session ? <Link to="/login" onClick={toggleMenu} className={styles.mobileNavLink}>Entrar</Link> : <>
+              <Link to="/minha-conta" state={{ tab: "overview" }} onClick={toggleMenu} className={styles.mobileNavLink}>Perfil — {session.user}</Link>
+              <Link to="/minha-conta" state={{ tab: "orders" }} onClick={toggleMenu} className={styles.mobileNavLink}>Meus pedidos</Link>
+              {session.role.toLowerCase() === "admin" && <Link to="/dashboard" onClick={toggleMenu} className={styles.mobileNavLink}>Administração</Link>}
+              <button type="button" onClick={() => { toggleMenu(); signOut(); }} className={`${styles.mobileNavLink} ${styles.mobileLogout}`}>Sair da conta</button>
+            </>}
           </nav>
         </div>
       )}

@@ -62,6 +62,131 @@
   color: var(--color-ink);
 }
 
+.accountMenuWrap {
+  position: relative;
+}
+
+.accountChevron {
+  color: #777771;
+  font-size: 14px;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+
+.accountChevronOpen {
+  transform: rotate(180deg);
+}
+
+.accountDropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: 230px;
+  padding: 8px;
+  border: 1px solid #343430;
+  background: #111;
+  color: #f5f5f1;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
+  z-index: 20;
+}
+
+.accountDropdown::before {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  top: -6px;
+  right: 20px;
+  border-top: 1px solid #343430;
+  border-left: 1px solid #343430;
+  background: #111;
+  transform: rotate(45deg);
+}
+
+.accountDropdownHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+  padding: 10px 9px 14px;
+  border-bottom: 1px solid #30302d;
+}
+
+.accountDropdownHeader > span {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #111;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.accountDropdownHeader > div {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.accountDropdownHeader b {
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.accountDropdownHeader small {
+  color: #6f6f69;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.accountDropdown > a,
+.accountDropdown > button {
+  width: 100%;
+  display: block;
+  padding: 11px 10px;
+  border: 0;
+  background: transparent;
+  color: #aaa9a3;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.accountDropdown > a:hover,
+.accountDropdown > button:hover,
+.accountDropdown > a:focus-visible,
+.accountDropdown > button:focus-visible {
+  background: #1d1d1a;
+  color: var(--color-accent);
+  outline: none;
+}
+
+.accountDropdown > button {
+  margin-top: 5px;
+  border-top: 1px solid #30302d;
+  color: #d18880;
+}
+
+.mobileLogout {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #a1281e;
+  text-align: left;
+  cursor: pointer;
+}
+
 .cartBadge {
   position: absolute;
   top: -6px;
