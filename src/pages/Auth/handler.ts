@@ -22,6 +22,10 @@ export function useAuthForm(mode: AuthMode) {
     event.preventDefault();
     setError("");
 
+    if (/\s/.test(user)) {
+      setError("O nome de usuário não aceita espaços.");
+      return;
+    }
     if (!/^[a-zA-Z0-9_-]{3,30}$/.test(user)) {
       setError("Use de 3 a 30 caracteres: letras, números, _ ou -.");
       return;

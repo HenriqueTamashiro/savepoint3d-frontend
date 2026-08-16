@@ -23,6 +23,7 @@ export default function Auth({ mode }: AuthProps) {
     setShowPassword,
     handleSubmit,
   } = useAuthForm(mode);
+  const userHasSpace = isRegister && /\s/.test(user);
 
   if (activeSession) {
     const destination =
@@ -73,11 +74,32 @@ export default function Auth({ mode }: AuthProps) {
                 required
                 minLength={3}
                 maxLength={30}
+                pattern="[A-Za-z0-9_-]{3,30}"
                 autoComplete="username"
                 value={user}
                 onChange={(event) => setUser(event.target.value)}
+                aria-invalid={userHasSpace}
+                aria-describedby={
+                  isRegister
+                    ? userHasSpace
+                      ? "username-help username-error"
+                      : "username-help"
+                    : undefined
+                }
+                className={userHasSpace ? styles.invalidInput : undefined}
                 placeholder="Seu login"
               />
+              {isRegister && (
+                <small id="username-help" className={styles.fieldHelp}>
+                  Use de 3 a 30 caracteres, sem espaços. São aceitos letras,
+                  números, _ e -.
+                </small>
+              )}
+              {userHasSpace && (
+                <small id="username-error" className={styles.fieldError} role="alert">
+                  Espaços não são aceitos no nome de usuário.
+                </small>
+              )}
             </label>
             <label>
               Senha
@@ -120,7 +142,7 @@ export default function Auth({ mode }: AuthProps) {
                 {error}
               </p>
             )}
-            <button type="submit" className={styles.submit} disabled={loading}>
+            <button type="submit" className={styles.submit} disabled={loading || userHasSpace}>
               {loading
                 ? "Aguarde…"
                 : isRegister
