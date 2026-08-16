@@ -1,23 +1,26 @@
 import { CartLine } from "../types/product";
 import { Order } from "../types/order";
-import { getAuthSession } from "./auth";
+import { authenticatedFetch } from "./auth";
 
-async function authenticatedRequest(path: string, init?: RequestInit): Promise<Response> {
-  const session = getAuthSession();
-  if (!session) throw new Error("Faça login para continuar.");
-
-  const response = await fetch(path, {
+async function authenticatedRequest(
+  path: string,
+  init?: RequestInit,
+): Promise<Response> {
+  const response = await authenticatedFetch(path, {
     ...init,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${session.accessToken}`,
       ...init?.headers,
     },
   });
 
   if (!response.ok) {
-    const data = (await response.json().catch(() => null)) as { message?: string | string[] } | null;
-    const message = Array.isArray(data?.message) ? data.message.join(" ") : data?.message;
+    const data = (await response.json().catch(() => null)) as {
+      message?: string | string[];
+    } | null;
+    const message = Array.isArray(data?.message)
+      ? data.message.join(" ")
+      : data?.message;
     throw new Error(message ?? "Não foi possível concluir o pedido.");
   }
 
@@ -38,7 +41,10 @@ function normalizeOrder(order: Order): Order {
   };
 }
 
-export async function createOrder(cart: CartLine[], couponCode: string): Promise<Order> {
+export async function createOrder(
+  cart: CartLine[],
+  couponCode: string,
+): Promise<Order> {
   const response = await authenticatedRequest("/api/orders", {
     method: "POST",
     body: JSON.stringify({

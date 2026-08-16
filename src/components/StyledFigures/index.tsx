@@ -1,4 +1,4 @@
-import { Post } from "../../types/post";
+import { Post, PostType } from "../../types/post";
 import {
   Content,
   CtaButton,
@@ -14,10 +14,27 @@ interface StyledFiguresProps {
   figures?: Post[];
 }
 
+const DEFAULT_FIGURE: Post = {
+  id: "default-styled-figure",
+  authorId: "local",
+  title: "Pequenas no tamanho.\nGigantes na personalidade.",
+  content:
+    "Personagens, profissões, casais e presentes ganham vida em figuras estilizadas — toy art e vinyl style feitos sob medida, com identidade só sua.",
+  type: PostType.FIGURE,
+  tag: "FIGURAS",
+  imageUrl: "/assets/img/3.png",
+  show: true,
+};
+
 export default function StyledFigures({ figures = [] }: StyledFiguresProps) {
+  const visibleFigures = figures.filter(
+    (item) => item.type === PostType.FIGURE && item.show !== false,
+  );
+  const items = visibleFigures.length > 0 ? visibleFigures : [DEFAULT_FIGURE];
+
   return (
     <>
-      {figures.map((item) => (
+      {items.map((item) => (
         <Section key={item.id}>
           <ImageWrap>
             <FigureImage

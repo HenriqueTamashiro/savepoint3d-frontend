@@ -78,11 +78,14 @@ export default function Account({ initialTab = "overview" }: AccountProps) {
   }
 
   function leaveAdministration() {
-    if (location.pathname.startsWith("/dashboard")) {
-      navigate("/minha-conta", { replace: true });
-      return;
-    }
     setActiveTab("overview");
+
+    if (location.pathname.startsWith("/dashboard")) {
+      navigate("/minha-conta", {
+        replace: true,
+        state: { tab: "overview" satisfies AccountTab },
+      });
+    }
   }
 
   if (activeTab === "admin" && isAdmin) {
