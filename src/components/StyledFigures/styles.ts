@@ -13,6 +13,11 @@ export const Section = styled.section`
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: ${({ theme }) => theme.layout.sectionPaddingMobile};
     gap: 40px;
+
+    & > * {
+      width: 100%;
+      min-width: 0;
+    }
   }
 `;
 
@@ -23,6 +28,11 @@ export const ImageWrap = styled.div`
   background: ${({ theme }) => theme.colors.inkSoft};
   position: relative;
   overflow: hidden;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+    min-width: 0;
+  }
 `;
 
 export const FigureImage = styled.img`
@@ -40,6 +50,11 @@ export const FigureImage = styled.img`
 export const Content = styled.div`
   flex: 1 1 420px;
   min-width: 300px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+    min-width: 0;
+  }
 `;
 
 export const SectionNumber = styled.span`

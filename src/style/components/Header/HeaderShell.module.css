@@ -14,6 +14,8 @@
 }
 
 .inner {
+  width: 100%;
+  min-width: 0;
   max-width: 1600px;
   margin: 0 auto;
   padding: 10px 40px;
@@ -39,5 +41,24 @@
 @media (max-width: 1280px) {
   .inner {
     padding-inline: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .inner {
+    min-height: 84px;
+    padding: 8px 16px;
+    gap: 12px;
+  }
+
+  .logoLink {
+    min-width: 0;
+  }
+
+  .logo {
+    width: auto;
+    max-width: min(190px, 52vw);
+    height: auto;
+    max-height: 66px;
   }
 }

@@ -241,6 +241,31 @@
 }
 
 @media (max-width: 520px) {
+  .heroContent {
+    width: 100%;
+    min-width: 0;
+    padding: 96px 26px 60px;
+    gap: 24px;
+  }
+
+  .heroContent h1 {
+    font-size: clamp(44px, 14vw, 62px);
+    overflow-wrap: anywhere;
+  }
+
+  .heroContent p {
+    font-size: 17px;
+  }
+
+  .heroActions,
+  .heroActions a {
+    width: 100%;
+  }
+
+  .heroActions a {
+    text-align: center;
+  }
+
   .destaquesGrid {
     grid-auto-columns: 100%;
   }

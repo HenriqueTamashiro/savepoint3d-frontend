@@ -21,13 +21,19 @@ export const GlobalStyles = createGlobalStyle`
     scroll-behavior: smooth;
   }
 
+  html, body, #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
   body {
     margin: 0;
     background: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.ink};
     font-family: ${({ theme }) => theme.fonts.sans};
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
   }
 
   button, input, textarea {

@@ -56,3 +56,8 @@
   object-fit: cover;
   object-position: 65% 30%;
 }
+
+@media (max-width: 700px) {
+  .section { padding: 80px 24px; gap: 40px; }
+  .content, .imageWrap { width: 100%; min-width: 0; }
+}

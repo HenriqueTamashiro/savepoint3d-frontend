@@ -7,6 +7,10 @@
 .dioramaContent p { font-size: 16px; line-height: 1.7; color: #D8D8D5; max-width: 480px; margin: 0 0 28px; white-space: pre-wrap; }
 .ctaButton { background: var(--color-accent); color: var(--color-ink); font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 16px 30px; display: inline-block; }
 
+@media (max-width: 700px) {
+  .dioramaContent { width: 100%; padding: 48px 24px; }
+}
+
 .section { padding: 0 56px 120px; max-width: 1600px; margin: 0 auto; }
 .section > h2 { margin: 120px 0 44px; font-size: clamp(36px, 5vw, 64px); font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; line-height: 0.98; }
 .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px; }

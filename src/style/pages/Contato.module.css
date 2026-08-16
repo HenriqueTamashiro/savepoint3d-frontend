@@ -11,3 +11,8 @@
 .submitButton { margin-top: 8px; background: var(--color-ink); color: #F2F2F0; border: none; font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 16px 30px; cursor: pointer; }
 .submitButton:hover { background: var(--color-accent); color: var(--color-ink); }
 .confirmation { font-size: 13px; color: #5c8c00; }
+
+@media (max-width: 700px) {
+  .section { padding: 80px 24px; }
+  .fields, .upload { width: 100%; min-width: 0; }
+}
