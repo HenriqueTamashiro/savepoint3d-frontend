@@ -74,7 +74,7 @@ export default function Auth({ mode }: AuthProps) {
                 required
                 minLength={3}
                 maxLength={30}
-                pattern="[A-Za-z0-9_-]{3,30}"
+                pattern="(?:[A-Za-z0-9_]|-){3,30}"
                 autoComplete="username"
                 value={user}
                 onChange={(event) => setUser(event.target.value)}

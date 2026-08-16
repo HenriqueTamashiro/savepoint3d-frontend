@@ -81,7 +81,7 @@
   position: absolute;
   top: calc(100% + 14px);
   right: 0;
-  width: 230px;
+  width: min(230px, calc(100vw - 32px));
   padding: 8px;
   border: 1px solid #343430;
   background: #111;
@@ -185,6 +185,20 @@
   color: #a1281e;
   text-align: left;
   cursor: pointer;
+}
+
+@media (max-width: 1280px) {
+  .nav {
+    gap: 20px;
+  }
+
+  .actions {
+    gap: 10px;
+  }
+
+  .accountName {
+    max-width: 90px;
+  }
 }
 
 .cartBadge {

@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
+const MOBILE_BREAKPOINT = 1100;
+
 export function useHeader() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () => window.innerWidth < MOBILE_BREAKPOINT,
+  );
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -9,7 +13,7 @@ export function useHeader() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 900);
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
       setAccountMenuOpen(false);
     };
     const onScroll = () => setScrolled(window.scrollY > 40);
