@@ -13,7 +13,9 @@ export function useHeader() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+      const mobile = window.innerWidth < MOBILE_BREAKPOINT;
+      setIsMobile(mobile);
+      if (!mobile) setMenuOpen(false);
       setAccountMenuOpen(false);
     };
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -38,7 +40,10 @@ export function useHeader() {
     }
 
     function closeOnEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setAccountMenuOpen(false);
+      if (event.key === "Escape") {
+        setAccountMenuOpen(false);
+        setMenuOpen(false);
+      }
     }
 
     document.addEventListener("pointerdown", closeOnOutsideClick);
@@ -49,7 +54,22 @@ export function useHeader() {
     };
   }, [accountMenuOpen]);
 
-  const toggleMenu = () => setMenuOpen((v) => !v);
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [menuOpen]);
+
+  const toggleMenu = () => {
+    setAccountMenuOpen(false);
+    setMenuOpen((current) => !current);
+  };
+  const closeMenu = () => setMenuOpen(false);
   const toggleAccountMenu = () => setAccountMenuOpen((current) => !current);
   const closeAccountMenu = () => setAccountMenuOpen(false);
 
@@ -60,6 +80,7 @@ export function useHeader() {
     scrolled,
     accountMenuRef,
     toggleMenu,
+    closeMenu,
     toggleAccountMenu,
     closeAccountMenu,
   };

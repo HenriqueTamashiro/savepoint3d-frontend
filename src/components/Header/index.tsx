@@ -98,6 +98,7 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
     scrolled,
     accountMenuRef,
     toggleMenu,
+    closeMenu,
     toggleAccountMenu,
     closeAccountMenu,
   } = useHeader();
@@ -111,9 +112,10 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
   }
 
   return (
-    <header
-      className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}
-    >
+    <>
+      <header
+        className={`${styles.header} ${scrolled ? styles.headerScrolled : ""}`}
+      >
       <div className={styles.inner}>
         <Link
           to="/"
@@ -194,6 +196,8 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
               type="button"
               onClick={toggleMenu}
               aria-label="Abrir menu"
+              aria-controls="mobile-navigation"
+              aria-expanded={menuOpen}
               className={styles.iconButton}
             >
               <MenuIcon />
@@ -201,12 +205,15 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
           )}
         </div>
       </div>
+      </header>
+
+      {isMobile && <div className={styles.mobileHeaderSpacer} aria-hidden="true" />}
 
       {menuOpen && (
-        <div className={styles.mobileMenu}>
+        <div id="mobile-navigation" className={styles.mobileMenu} role="dialog" aria-modal="true" aria-label="Menu principal">
           <button
             type="button"
-            onClick={toggleMenu}
+            onClick={closeMenu}
             aria-label="Fechar menu"
             className={styles.closeButton}
           >
@@ -217,21 +224,21 @@ export default function Header({ cartCount, onOpenCart }: HeaderProps) {
               <a
                 key={link.label}
                 href={link.href}
-                onClick={toggleMenu}
+                onClick={closeMenu}
                 className={styles.mobileNavLink}
               >
                 {link.label}
               </a>
             ))}
-            {!session ? <Link to="/login" onClick={toggleMenu} className={styles.mobileNavLink}>Entrar</Link> : <>
-              <Link to="/minha-conta" state={{ tab: "overview" }} onClick={toggleMenu} className={styles.mobileNavLink}>Perfil — {session.user}</Link>
-              <Link to="/minha-conta" state={{ tab: "orders" }} onClick={toggleMenu} className={styles.mobileNavLink}>Meus pedidos</Link>
-              {session.role.toLowerCase() === "admin" && <Link to="/dashboard" onClick={toggleMenu} className={styles.mobileNavLink}>Administração</Link>}
-              <button type="button" onClick={() => { toggleMenu(); signOut(); }} className={`${styles.mobileNavLink} ${styles.mobileLogout}`}>Sair da conta</button>
+            {!session ? <Link to="/login" onClick={closeMenu} className={styles.mobileNavLink}>Entrar</Link> : <>
+              <Link to="/minha-conta" state={{ tab: "overview" }} onClick={closeMenu} className={styles.mobileNavLink}>Perfil — {session.user}</Link>
+              <Link to="/minha-conta" state={{ tab: "orders" }} onClick={closeMenu} className={styles.mobileNavLink}>Meus pedidos</Link>
+              {session.role.toLowerCase() === "admin" && <Link to="/dashboard" onClick={closeMenu} className={styles.mobileNavLink}>Administração</Link>}
+              <button type="button" onClick={signOut} className={`${styles.mobileNavLink} ${styles.mobileLogout}`}>Sair da conta</button>
             </>}
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }

@@ -24,7 +24,9 @@ export const GlobalStyles = createGlobalStyle`
   html, body, #root {
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
+  }
+
+  html, body {
     overflow-x: clip;
   }
 

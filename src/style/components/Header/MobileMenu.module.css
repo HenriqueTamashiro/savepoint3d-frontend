@@ -1,7 +1,10 @@
 .mobileMenu {
   position: fixed;
   inset: 0;
-  background: var(--color-bg);
+  background-color: var(--color-bg);
+  background-image: radial-gradient(#c7c7c1 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-position: 0 0;
   z-index: 200;
   padding: 28px 32px;
   overflow-y: auto;
