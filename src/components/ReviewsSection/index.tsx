@@ -1,4 +1,4 @@
-import styles from '../../style/components/ReviewsSection';
+import styles, { StyleScope } from '../../style/components/ReviewsSection';
 
 const REVIEWS = [
   { name: 'Rafael M.', product: 'Crimson Ronin', stars: '★★★★★', comment: 'Acabamento impecável, muito acima do que eu esperava de uma peça sob encomenda.', date: '12/06/2026' },
@@ -7,7 +7,7 @@ const REVIEWS = [
 ];
 
 export default function ReviewsSection() {
-  return (
+  return (<StyleScope>{(
     <section className={styles.section}>
       <h2>O que dizem os<br />colecionadores.</h2>
       <div className={styles.grid}>
@@ -26,5 +26,5 @@ export default function ReviewsSection() {
         ))}
       </div>
     </section>
-  );
+  )}</StyleScope>);
 }

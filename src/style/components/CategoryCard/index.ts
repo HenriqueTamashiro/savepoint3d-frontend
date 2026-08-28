@@ -1,4 +1,84 @@
-import cardStyles from "./Card.module.css";
-import contentStyles from "./CardContent.module.css";
+import styled from "styled-components";
 
-export default { ...cardStyles, ...contentStyles };
+export const StyleScope = styled.div`
+  display: contents;
+
+.card {
+  background: var(--color-bg);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  min-height: 200px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+.card:hover {
+  background: var(--color-ink);
+  color: #f2f2f0;
+}
+
+.tall {
+  min-height: 260px;
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.16;
+  object-position: top center;
+}
+
+.index {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.arrow {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .arrow {
+  transform: translateX(4px);
+}
+
+.footer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.name {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+`;
+
+const styles = {
+  "arrow": "arrow",
+  "bgImage": "bgImage",
+  "card": "card",
+  "footer": "footer",
+  "index": "index",
+  "name": "name",
+  "tall": "tall",
+} as const;
+
+export default styles;

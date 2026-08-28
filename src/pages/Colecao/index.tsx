@@ -1,7 +1,7 @@
 import { useColecaoPage, FILTERS } from './handler';
 import ProductCard from '../../components/ProductCard';
 import { Post } from '../../types/post';
-import styles from '../../style/pages/Colecao.module.css';
+import * as S from "../../style/pages/Colecao.styles";
 
 interface ColecaoProps {
   onAddToCart: (id: string) => void;
@@ -15,16 +15,16 @@ export function DioramaSection({ projects = [] }: DioramaSectionProps) {
   const project = projects.find((item) => item.tag?.toUpperCase() === 'DIORAMA');
 
   return (
-    <section className={styles.dioramaHero} id="dioramas">
+    <S.DioramaHero id="dioramas">
       <img src={project?.imageUrl ?? "/assets/img/7.png"} alt={project?.title ?? "Diorama colecionável Save Point3D"} />
-      <div className={styles.dioramaOverlay} />
-      <div className={styles.dioramaContent}>
-        <span className={styles.sectionNumber}>08 —</span>
+      <S.DioramaOverlay />
+      <S.DioramaContent>
+        <S.SectionNumber>08 —</S.SectionNumber>
         <h2>{project?.title ?? "Uma cena inteira na sua estante."}</h2>
         <p>{project?.content ?? "Dioramas desenvolvidos para transformar momentos épicos em peças colecionáveis cheias de movimento, profundidade e detalhes."}</p>
-        <a href="#lancamentos" className={styles.ctaButton}>Explorar dioramas</a>
-      </div>
-    </section>
+        <S.CtaButton href="#lancamentos">Explorar dioramas</S.CtaButton>
+      </S.DioramaContent>
+    </S.DioramaHero>
   );
 }
 
@@ -32,26 +32,26 @@ export function LancamentosSection({ onAddToCart }: ColecaoProps) {
   const { filtered, activeFilter, setActiveFilter } = useColecaoPage();
 
   return (
-    <section id="lancamentos" className={styles.section}>
+    <S.Section id="lancamentos">
       <h2>Novos checkpoints<br />desbloqueados.</h2>
-      <div className={styles.filters}>
+      <S.Filters>
         {FILTERS.map((f) => (
-          <button
+          <S.FilterButton
             key={f.value}
             type="button"
-            className={`${styles.filterButton} ${activeFilter === f.value ? styles.active : ''}`}
+            $active={activeFilter === f.value}
             onClick={() => setActiveFilter(f.value)}
           >
             {f.label}
-          </button>
+          </S.FilterButton>
         ))}
-      </div>
-      <div className={styles.grid}>
+      </S.Filters>
+      <S.Grid>
         {filtered.map((p) => (
           <ProductCard key={p.id} product={p} onAddToCart={onAddToCart} variant="dark" />
         ))}
-      </div>
-    </section>
+      </S.Grid>
+    </S.Section>
   );
 }
 

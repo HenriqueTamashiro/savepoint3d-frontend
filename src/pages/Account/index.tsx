@@ -6,7 +6,7 @@ import { getAuthSession, logout } from "../../services/auth";
 import { fetchMyOrders } from "../../services/orders";
 import { Order, OrderStatus } from "../../types/order";
 import Dashboard from "../Dashboard";
-import styles from "../../style/pages/Account.module.css";
+import * as S from "../../style/pages/Account.styles";
 
 type AccountTab = "overview" | "orders" | "favorites" | "addresses" | "admin";
 
@@ -36,7 +36,7 @@ function TabIcon({ tab }: { tab: AccountTab }) {
     admin: <><path d="M12 3 4.5 6v5.2c0 4.6 3.2 8.1 7.5 9.8 4.3-1.7 7.5-5.2 7.5-9.8V6z" /><path d="M9 12h6M12 9v6" /></>,
   };
 
-  return <svg className={styles.tabIcon} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">{paths[tab]}</svg>;
+  return <S.TabIcon viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">{paths[tab]}</S.TabIcon>;
 }
 
 const STATUS_LABELS: Record<OrderStatus, string> = {
@@ -49,7 +49,7 @@ const STATUS_LABELS: Record<OrderStatus, string> = {
 };
 
 function EmptyState({ title, description, action, href }: { title: string; description: string; action: string; href: string }) {
-  return <div className={styles.emptyState}><span>SP—03D</span><h2>{title}</h2><p>{description}</p><Link to={href}>{action}</Link></div>;
+  return <S.EmptyState><span>SP—03D</span><h2>{title}</h2><p>{description}</p><Link to={href}>{action}</Link></S.EmptyState>;
 }
 
 export default function Account({ initialTab = "overview" }: AccountProps) {
@@ -92,62 +92,62 @@ export default function Account({ initialTab = "overview" }: AccountProps) {
     return <Dashboard onBack={leaveAdministration} />;
   }
 
-  return (
-    <main className={`${styles.accountPage} ${menuCollapsed ? styles.menuCollapsed : ""}`}>
-      <aside className={styles.sidebar}>
-        <div className={styles.sidebarHeader}>
-          <Link to="/" className={styles.brand}>SAVE POINT<span>3D</span></Link>
-          <button type="button" className={styles.collapseButton} onClick={() => setMenuCollapsed((current) => !current)} aria-label={menuCollapsed ? "Expandir menu" : "Recolher menu"} title={menuCollapsed ? "Expandir menu" : "Recolher menu"}>{menuCollapsed ? "›" : "‹"}</button>
-        </div>
-        <div className={styles.profile}>
-          <div className={styles.avatar}>{session?.user.slice(0, 1).toUpperCase()}</div>
+  return (<S.StyleScope>{(
+    <S.AccountPage $collapsed={menuCollapsed}>
+      <S.Sidebar>
+        <S.SidebarHeader>
+          <S.Brand to="/">SAVE POINT<span>3D</span></S.Brand>
+          <S.CollapseButton type="button" onClick={() => setMenuCollapsed((current) => !current)} aria-label={menuCollapsed ? "Expandir menu" : "Recolher menu"} title={menuCollapsed ? "Expandir menu" : "Recolher menu"}>{menuCollapsed ? "›" : "‹"}</S.CollapseButton>
+        </S.SidebarHeader>
+        <S.Profile>
+          <S.Avatar>{session?.user.slice(0, 1).toUpperCase()}</S.Avatar>
           <span>Minha conta</span><h1>{session?.user}</h1><p>Membro da comunidade Save Point3D</p>
-        </div>
-        <nav className={styles.navigation} aria-label="Minha conta">
-          {availableTabs.map((tab) => <button key={tab.key} type="button" className={activeTab === tab.key ? styles.activeTab : ""} onClick={() => setActiveTab(tab.key)} title={menuCollapsed ? tab.label : undefined}><TabIcon tab={tab.key} /><span>{tab.number}</span><b>{tab.label}</b></button>)}
-        </nav>
-        <div className={styles.sidebarFooter}><Link to="/">← Voltar para a loja</Link><button type="button" onClick={signOut}>Sair da conta</button></div>
-      </aside>
+        </S.Profile>
+        <S.Navigation aria-label="Minha conta">
+          {availableTabs.map((tab) => <S.NavigationButton key={tab.key} type="button" $active={activeTab === tab.key} onClick={() => setActiveTab(tab.key)} title={menuCollapsed ? tab.label : undefined}><TabIcon tab={tab.key} /><span>{tab.number}</span><b>{tab.label}</b></S.NavigationButton>)}
+        </S.Navigation>
+        <S.SidebarFooter><Link to="/">← Voltar para a loja</Link><button type="button" onClick={signOut}>Sair da conta</button></S.SidebarFooter>
+      </S.Sidebar>
 
-      <section className={styles.content}>
-        <header className={styles.header}>
+      <S.Content>
+        <S.Header>
           <div><span>{activeTab === "admin" ? "Área administrativa" : "Área do cliente"}</span><strong>{availableTabs.find((tab) => tab.key === activeTab)?.label}</strong></div>
-          <Link to="/colecao" className={styles.shopLink}>Explorar coleção</Link>
-        </header>
+          <S.ShopLink to="/colecao">Explorar coleção</S.ShopLink>
+        </S.Header>
 
         {activeTab === "overview" && (
-          <div className={styles.overview}>
-            <section className={styles.welcome}>
+          <S.Overview>
+            <S.Welcome>
               <span>Olá, {session?.user}</span><h2>Seu próximo checkpoint começa aqui.</h2>
               <p>Acompanhe sua coleção e encontre novas peças produzidas especialmente para transformar seu universo favorito em algo real.</p>
               <div><Link to="/colecao">Ver lançamentos</Link><Link to="/personalizados">Criar peça personalizada</Link></div>
-            </section>
-            <section className={styles.summary} aria-label="Resumo da conta">
+            </S.Welcome>
+            <S.Summary aria-label="Resumo da conta">
               <article><span>Pedidos</span><strong>{orders.length}</strong><small>{orders.length ? "Acompanhe seus pedidos" : "Nenhum pedido em andamento"}</small></article>
               <article><span>Favoritos</span><strong>0</strong><small>Sua lista está pronta para começar</small></article>
               <article><span>Status</span><strong>ON</strong><small>Conta ativa</small></article>
-            </section>
-            <section className={styles.discovery}><div><span>Descobrir</span><h3>Uma peça que só você poderia imaginar.</h3></div><Link to="/personalizados">Solicitar orçamento →</Link></section>
-          </div>
+            </S.Summary>
+            <S.Discovery><div><span>Descobrir</span><h3>Uma peça que só você poderia imaginar.</h3></div><Link to="/personalizados">Solicitar orçamento →</Link></S.Discovery>
+          </S.Overview>
         )}
 
         {activeTab === "orders" && (
-          <div className={styles.ordersPanel}>
-            {routeState?.orderCreated && <p className={styles.orderSuccess}>Pedido criado com sucesso. Acompanhe o andamento abaixo.</p>}
-            {ordersLoading && <p className={styles.ordersFeedback}>Carregando pedidos…</p>}
-            {ordersError && <p className={styles.ordersError}>{ordersError}</p>}
+          <S.OrdersPanel>
+            {routeState?.orderCreated && <S.OrderSuccess>Pedido criado com sucesso. Acompanhe o andamento abaixo.</S.OrderSuccess>}
+            {ordersLoading && <S.OrdersFeedback>Carregando pedidos…</S.OrdersFeedback>}
+            {ordersError && <S.OrdersError>{ordersError}</S.OrdersError>}
             {!ordersLoading && !ordersError && orders.length === 0 && <EmptyState title="Nenhum pedido por aqui." description="Quando você fizer uma compra, o andamento e os detalhes aparecerão nesta área." action="Explorar coleção" href="/colecao" />}
             {orders.length > 0 && (
-              <div className={styles.orderList}>
+              <S.OrderList>
                 {orders.map((order) => (
-                  <article key={order.id} className={styles.orderCard}>
+                  <S.OrderCard key={order.id}>
                     <header>
                       <div><span>Pedido</span><strong>#{order.id.slice(0, 8).toUpperCase()}</strong></div>
                       <div><span>Realizado em</span><strong>{new Intl.DateTimeFormat("pt-BR").format(new Date(order.createdAt))}</strong></div>
                       <div><span>Total</span><strong>{formatPrice(order.total)}</strong></div>
-                      <span className={styles.orderStatus}>{STATUS_LABELS[order.status]}</span>
+                      <S.OrderStatus>{STATUS_LABELS[order.status]}</S.OrderStatus>
                     </header>
-                    <div className={styles.orderItems}>
+                    <S.OrderItems>
                       {order.items.map((item) => (
                         <div key={item.id}>
                           <img src={item.imageUrl ?? "/assets/img/3.png"} alt="" />
@@ -155,17 +155,17 @@ export default function Account({ initialTab = "overview" }: AccountProps) {
                           <strong>{formatPrice(item.lineTotal)}</strong>
                         </div>
                       ))}
-                    </div>
+                    </S.OrderItems>
                     {order.discount > 0 && <footer>Desconto aplicado: <strong>− {formatPrice(order.discount)}</strong></footer>}
-                  </article>
+                  </S.OrderCard>
                 ))}
-              </div>
+              </S.OrderList>
             )}
-          </div>
+          </S.OrdersPanel>
         )}
         {activeTab === "favorites" && <EmptyState title="Sua lista está vazia." description="Favorite as peças que mais combinam com sua coleção para encontrá-las rapidamente." action="Descobrir peças" href="/colecao" />}
         {activeTab === "addresses" && <EmptyState title="Nenhum endereço cadastrado." description="Os endereços utilizados em seus próximos pedidos serão exibidos aqui." action="Voltar para a loja" href="/" />}
-      </section>
-    </main>
-  );
+      </S.Content>
+    </S.AccountPage>
+  )}</S.StyleScope>);
 }

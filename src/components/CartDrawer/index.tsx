@@ -1,7 +1,7 @@
 import { CartLine, Product } from "../../types/product";
 import { useCartDrawer } from "./handler";
 import { formatPrice } from "../ProductCard/handler";
-import styles from "../../style/components/CartDrawer";
+import styles, { StyleScope } from "../../style/components/CartDrawer";
 
 interface CartDrawerProps {
   open: boolean;
@@ -37,7 +37,7 @@ export default function CartDrawer({
     applyCoupon,
   } = useCartDrawer(cart, products, initialCouponCode, onCouponApplied);
 
-  return (
+  return (<StyleScope>{(
     <>
       {open && <div className={styles.overlay} onClick={onClose} />}
       <aside
@@ -126,5 +126,5 @@ export default function CartDrawer({
         </div>
       </aside>
     </>
-  );
+  )}</StyleScope>);
 }

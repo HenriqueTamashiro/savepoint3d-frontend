@@ -1,10 +1,10 @@
 import { useNewsletter } from './handler';
-import styles from '../../style/components/Newsletter';
+import styles, { StyleScope } from '../../style/components/Newsletter';
 
 export default function Newsletter() {
   const { email, setEmail, submitted, handleSubmit } = useNewsletter();
 
-  return (
+  return (<StyleScope>{(
     <section className={styles.section}>
       <div className={styles.inner}>
         <h2>Não perca o<br />próximo lançamento.</h2>
@@ -22,5 +22,5 @@ export default function Newsletter() {
         {submitted && <span className={styles.confirmation}>Inscrito! Você vai saber de tudo em primeira mão.</span>}
       </div>
     </section>
-  );
+  )}</StyleScope>);
 }

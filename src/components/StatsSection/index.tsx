@@ -1,4 +1,4 @@
-import styles from '../../style/components/StatsSection';
+import styles, { StyleScope } from '../../style/components/StatsSection';
 
 const STATS = [
   { value: '+150', label: 'Peças produzidas' },
@@ -8,7 +8,7 @@ const STATS = [
 ];
 
 export default function StatsSection() {
-  return (
+  return (<StyleScope>{(
     <section className={styles.section} aria-label="Números da Save Point3D">
       <div className={styles.grid}>
         {STATS.map((stat) => (
@@ -19,5 +19,5 @@ export default function StatsSection() {
         ))}
       </div>
     </section>
-  );
+  )}</StyleScope>);
 }

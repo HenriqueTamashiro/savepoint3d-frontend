@@ -5,33 +5,27 @@ export const Section = styled.section`
   max-width: ${({ theme }) => theme.layout.maxWidth};
   margin: 0 auto;
   padding: ${({ theme }) => theme.layout.sectionPadding};
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(340px, 1fr) minmax(320px, 0.85fr);
   align-items: center;
-  gap: 56px;
+  gap: clamp(40px, 5vw, 72px);
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
     padding: ${({ theme }) => theme.layout.sectionPaddingMobile};
     gap: 40px;
-
-    & > * {
-      width: 100%;
-      min-width: 0;
-    }
   }
 `;
 
 export const ImageWrap = styled.div`
-  flex: 1 1 320px;
-  min-width: 260px;
-  aspect-ratio: 3 / 4;
+  width: 100%;
+  height: clamp(480px, 52vw, 760px);
   background: ${({ theme }) => theme.colors.inkSoft};
   position: relative;
   overflow: hidden;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 100%;
-    min-width: 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    height: clamp(420px, 80vw, 680px);
   }
 `;
 
@@ -48,12 +42,11 @@ export const FigureImage = styled.img`
 `;
 
 export const Content = styled.div`
-  flex: 1 1 420px;
-  min-width: 300px;
+  width: 100%;
+  max-width: 560px;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    width: 100%;
-    min-width: 0;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    max-width: none;
   }
 `;
 

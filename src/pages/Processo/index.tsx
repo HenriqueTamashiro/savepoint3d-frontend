@@ -1,6 +1,6 @@
 import { PROCESS_STEPS } from './handler';
 import { Post } from '../../types/post';
-import styles from '../../style/pages/Processo.module.css';
+import * as S from "../../style/pages/Processo.styles";
 
 interface ProcessoProps {
   projects?: Post[];
@@ -10,22 +10,22 @@ export default function Processo({ projects = [] }: ProcessoProps) {
   const project = projects.find((item) => item.tag?.toUpperCase() === 'PROCESSO');
 
   return (
-    <section className={styles.section}>
-      <div className={styles.content}>
-        <span className={styles.sectionNumber}>09 —</span>
+    <S.Section>
+      <S.Content>
+        <S.SectionNumber>09 —</S.SectionNumber>
         <h2>{project?.title ?? "Do arquivo digital até a sua estante."}</h2>
-        <div className={styles.steps}>
+        <S.Steps>
           {PROCESS_STEPS.map((s) => (
-            <div key={s.n} className={styles.step}>
-              <span className={styles.stepNumber}>{s.n}</span>
+            <S.Step key={s.n}>
+              <S.StepNumber>{s.n}</S.StepNumber>
               <span>{s.label}</span>
-            </div>
+            </S.Step>
           ))}
-        </div>
-      </div>
-      <div className={styles.imageWrap}>
+        </S.Steps>
+      </S.Content>
+      <S.ImageWrap>
         <img src={project?.imageUrl ?? "/assets/img/processo-artesao.png"} alt={project?.title ?? "Processo de acabamento manual"} />
-      </div>
-    </section>
+      </S.ImageWrap>
+    </S.Section>
   );
 }

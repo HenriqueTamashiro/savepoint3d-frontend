@@ -1,4 +1,4 @@
-import styles from '../../style/components/InstagramGrid';
+import styles, { StyleScope, TileImage } from '../../style/components/InstagramGrid';
 
 const TILES = [
   { image: '/assets/img/1.png', alt: 'Detalhe de pintura em Crimson Ronin', position: 'center 20%' },
@@ -10,7 +10,7 @@ const TILES = [
 ];
 
 export default function InstagramGrid() {
-  return (
+  return (<StyleScope>{(
     <section className={styles.section}>
       <div className={styles.headerRow}>
         <h2>Acompanhe<br />nosso processo.</h2>
@@ -19,10 +19,10 @@ export default function InstagramGrid() {
       <div className={styles.grid}>
         {TILES.map((t) => (
           <div key={t.alt} className={styles.tile}>
-            <img src={t.image} alt={t.alt} loading="lazy" style={{ objectPosition: t.position }} />
+            <TileImage src={t.image} alt={t.alt} loading="lazy" $objectPosition={t.position} />
           </div>
         ))}
       </div>
     </section>
-  );
+  )}</StyleScope>);
 }

@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -12,15 +6,7 @@ import CartDrawer from "./components/CartDrawer";
 import Newsletter from "./components/Newsletter";
 import ReviewsSection from "./components/ReviewsSection";
 import InstagramGrid from "./components/InstagramGrid";
-import Home from "./pages/Home";
-import Personalizados from "./pages/Personalizados";
-import Colecao from "./pages/Colecao";
-import Processo from "./pages/Processo";
-import Contato from "./pages/Contato";
-import Auth from "./pages/Auth";
-import Account from "./pages/Account";
-import Checkout from "./pages/Checkout";
-import RequireAuth from "./components/RequireAuth";
+import AppRoutes from "./routes";
 import { CartLine, Product } from "./types/product";
 import { fetchProducts } from "./services/api";
 
@@ -112,47 +98,16 @@ function AppContent() {
       {!isPrivateSurface && (
         <Header cartCount={cartCount} onOpenCart={() => setCartOpen(true)} />
       )}
-      <Routes>
-        <Route path="/" element={<Home onAddToCart={addToCart} />} />
-        <Route path="/personalizados" element={<Personalizados />} />
-        <Route path="/colecao" element={<Colecao onAddToCart={addToCart} />} />
-        <Route path="/processo" element={<Processo />} />
-        <Route path="/contato" element={<Contato />} />
-        <Route path="/login" element={<Auth mode="login" />} />
-        <Route path="/cadastro" element={<Auth mode="register" />} />
-        <Route
-          path="/checkout"
-          element={
-            <RequireAuth>
-              <Checkout
-                cart={cart}
-                products={products}
-                couponCode={couponCode}
-                onComplete={() => {
-                  setCart([]);
-                  setCouponCode("");
-                }}
-              />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/minha-conta"
-          element={
-            <RequireAuth>
-              <Account />
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <RequireAuth roles={["ADMIN"]}>
-              <Account initialTab="admin" />
-            </RequireAuth>
-          }
-        />
-      </Routes>
+      <AppRoutes
+        cart={cart}
+        products={products}
+        couponCode={couponCode}
+        onAddToCart={addToCart}
+        onCheckoutComplete={() => {
+          setCart([]);
+          setCouponCode("");
+        }}
+      />
       {!isPrivateSurface && (
         <>
           <ReviewsSection />

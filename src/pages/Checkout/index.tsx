@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../../services/orders";
 import { CartLine, Product } from "../../types/product";
 import { formatPrice } from "../../components/ProductCard/handler";
-import styles from "../../style/pages/Checkout.module.css";
+import * as S from "../../style/pages/Checkout.styles";
 
 interface CheckoutProps {
   cart: CartLine[];
@@ -41,23 +41,23 @@ export default function Checkout({ cart, products, couponCode, onComplete }: Che
     }
   }
 
-  return (
-    <main className={styles.page}>
-      <header className={styles.header}>
-        <Link to="/" className={styles.brand}>SAVE POINT<span>3D</span></Link>
+  return (<S.StyleScope>{(
+    <S.Page>
+      <S.Header>
+        <S.Brand to="/">SAVE POINT<span>3D</span></S.Brand>
         <span>Checkout seguro</span>
-      </header>
-      <div className={styles.layout}>
-        <section className={styles.content}>
-          <span className={styles.eyebrow}>Seu pedido</span>
+      </S.Header>
+      <S.Layout>
+        <S.Content>
+          <S.Eyebrow>Seu pedido</S.Eyebrow>
           <h1>Confirme seu próximo checkpoint.</h1>
           {lines.length === 0 ? (
-            <div className={styles.empty}>
+            <S.Empty>
               <h2>Seu carrinho está vazio.</h2>
               <Link to="/colecao">Explorar coleção</Link>
-            </div>
+            </S.Empty>
           ) : (
-            <div className={styles.items}>
+            <S.Items>
               {lines.map((line) => (
                 <article key={line.id}>
                   <img src={line.product.imageUrl} alt={line.product.alt} />
@@ -65,23 +65,23 @@ export default function Checkout({ cart, products, couponCode, onComplete }: Che
                   <strong>{formatPrice(line.lineTotal)}</strong>
                 </article>
               ))}
-            </div>
+            </S.Items>
           )}
-        </section>
-        <aside className={styles.summary}>
+        </S.Content>
+        <S.Summary>
           <span>Resumo</span>
           <h2>Total do pedido</h2>
           <div><span>Subtotal</span><strong>{formatPrice(subtotal)}</strong></div>
-          {discount > 0 && <div className={styles.discount}><span>Cupom SAVE10</span><strong>− {formatPrice(discount)}</strong></div>}
-          <div className={styles.total}><span>Total</span><strong>{formatPrice(total)}</strong></div>
+          {discount > 0 && <S.Discount><span>Cupom SAVE10</span><strong>− {formatPrice(discount)}</strong></S.Discount>}
+          <S.Total><span>Total</span><strong>{formatPrice(total)}</strong></S.Total>
           <p>O estoque será reservado quando o pedido for confirmado.</p>
-          {error && <p className={styles.error} role="alert">{error}</p>}
+          {error && <S.Error role="alert">{error}</S.Error>}
           <button type="button" disabled={loading || lines.length === 0} onClick={finishOrder}>
             {loading ? "Finalizando…" : "Confirmar pedido"}
           </button>
           <Link to="/colecao">← Continuar comprando</Link>
-        </aside>
-      </div>
-    </main>
-  );
+        </S.Summary>
+      </S.Layout>
+    </S.Page>
+  )}</S.StyleScope>);
 }

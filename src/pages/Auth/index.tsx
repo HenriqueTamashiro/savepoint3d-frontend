@@ -1,7 +1,7 @@
 import { Link, Navigate } from "react-router-dom";
 import { getAuthSession } from "../../services/auth";
 import { AuthMode, useAuthForm } from "./handler";
-import styles from "../../style/pages/Auth.module.css";
+import * as S from "../../style/pages/Auth.styles";
 
 interface AuthProps {
   mode: AuthMode;
@@ -33,14 +33,14 @@ export default function Auth({ mode }: AuthProps) {
     return <Navigate to={destination} replace />;
   }
 
-  return (
-    <main className={styles.page}>
-      <section className={styles.visualPanel}>
-        <Link to="/" className={styles.brand}>
+  return (<S.StyleScope>{(
+    <S.Page>
+      <S.VisualPanel>
+        <S.Brand to="/">
           SAVE POINT<span>3D</span>
-        </Link>
-        <div className={styles.visualContent}>
-          <span className={styles.eyebrow}>Bem-vindo à Save Point3D</span>
+        </S.Brand>
+        <S.VisualContent>
+          <S.Eyebrow>Bem-vindo à Save Point3D</S.Eyebrow>
           <h1>
             Seu universo.
             <br />
@@ -50,13 +50,13 @@ export default function Auth({ mode }: AuthProps) {
             Acompanhe sua experiência, seus pedidos e as novidades da sua
             coleção em um só lugar.
           </p>
-        </div>
-        <div className={styles.visualNumber}>SP—03D</div>
-      </section>
+        </S.VisualContent>
+        <S.VisualNumber>SP—03D</S.VisualNumber>
+      </S.VisualPanel>
 
-      <section className={styles.formPanel}>
-        <div className={styles.formWrap}>
-          <div className={styles.formHeader}>
+      <S.FormPanel>
+        <S.FormWrap>
+          <S.FormHeader>
             <span>{isRegister ? "Primeiro acesso" : "Área do cliente"}</span>
             <h2>{isRegister ? "Criar sua conta" : "Entrar na sua conta"}</h2>
             <p>
@@ -64,12 +64,12 @@ export default function Auth({ mode }: AuthProps) {
                 ? "Cadastre-se para acompanhar seus pedidos e sua experiência com a Save Point3D."
                 : "Acesse seus pedidos, preferências e recursos disponíveis para o seu perfil."}
             </p>
-          </div>
+          </S.FormHeader>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <S.Form onSubmit={handleSubmit}>
             <label>
               Usuário
-              <input
+              <S.UsernameInput
                 autoFocus
                 required
                 minLength={3}
@@ -86,24 +86,24 @@ export default function Auth({ mode }: AuthProps) {
                       : "username-help"
                     : undefined
                 }
-                className={userHasSpace ? styles.invalidInput : undefined}
+                $invalid={userHasSpace}
                 placeholder="Seu login"
               />
               {isRegister && (
-                <small id="username-help" className={styles.fieldHelp}>
+                <S.FieldHelp id="username-help">
                   Use de 3 a 30 caracteres, sem espaços. São aceitos letras,
                   números, _ e -.
-                </small>
+                </S.FieldHelp>
               )}
               {userHasSpace && (
-                <small id="username-error" className={styles.fieldError} role="alert">
+                <S.FieldError id="username-error" role="alert">
                   Espaços não são aceitos no nome de usuário.
-                </small>
+                </S.FieldError>
               )}
             </label>
             <label>
               Senha
-              <div className={styles.passwordField}>
+              <S.PasswordField>
                 <input
                   required
                   minLength={8}
@@ -121,7 +121,7 @@ export default function Auth({ mode }: AuthProps) {
                 >
                   {showPassword ? "Ocultar" : "Mostrar"}
                 </button>
-              </div>
+              </S.PasswordField>
             </label>
             {isRegister && (
               <label>
@@ -138,32 +138,32 @@ export default function Auth({ mode }: AuthProps) {
               </label>
             )}
             {error && (
-              <p className={styles.error} role="alert">
+              <S.Error role="alert">
                 {error}
-              </p>
+              </S.Error>
             )}
-            <button type="submit" className={styles.submit} disabled={loading || userHasSpace}>
+            <S.Submit type="submit" disabled={loading || userHasSpace}>
               {loading
                 ? "Aguarde…"
                 : isRegister
                   ? "Criar conta e entrar"
                   : "Entrar"}
-            </button>
-          </form>
+            </S.Submit>
+          </S.Form>
 
-          <p className={styles.switchMode}>
+          <S.SwitchMode>
             {isRegister
               ? "Já possui uma conta?"
               : "Ainda não possui uma conta?"}{" "}
             <Link to={isRegister ? "/login" : "/cadastro"}>
               {isRegister ? "Fazer login" : "Criar conta"}
             </Link>
-          </p>
-          <Link to="/" className={styles.backLink}>
+          </S.SwitchMode>
+          <S.BackLink to="/">
             ← Voltar para a loja
-          </Link>
-        </div>
-      </section>
-    </main>
-  );
+          </S.BackLink>
+        </S.FormWrap>
+      </S.FormPanel>
+    </S.Page>
+  )}</S.StyleScope>);
 }

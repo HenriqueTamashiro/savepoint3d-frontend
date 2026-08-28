@@ -1,6 +1,6 @@
 import { Product } from "../../types/product";
 import { useProductCardHover, formatPrice } from "./handler";
-import styles from "../../style/components/ProductCard";
+import styles, { StyleScope } from "../../style/components/ProductCard";
 
 interface ProductCardProps {
   product: Product;
@@ -15,7 +15,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   const { hovered, onMouseEnter, onMouseLeave } = useProductCardHover();
 
-  return (
+  return (<StyleScope>{(
     <article
       className={`${styles.card} ${variant === "light" ? styles.light : styles.dark} ${hovered ? styles.hovered : ""}`}
       onMouseEnter={onMouseEnter}
@@ -55,5 +55,5 @@ export default function ProductCard({
         </div>
       </div>
     </article>
-  );
+  )}</StyleScope>);
 }

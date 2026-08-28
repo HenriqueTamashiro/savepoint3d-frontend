@@ -8,7 +8,7 @@ import Personalizados from "../Personalizados";
 import Processo from "../Processo";
 import Contato from "../Contato";
 import { DioramaSection, LancamentosSection } from "../Colecao";
-import styles from "../../style/pages/Home.module.css";
+import * as S from "../../style/pages/Home.styles";
 
 interface HomeProps {
   onAddToCart: (id: string) => void;
@@ -28,41 +28,40 @@ export default function Home({ onAddToCart }: HomeProps) {
   const { trackRef, canScrollPrevious, canScrollNext, scrollOneItem } =
     useFeaturedCarousel(destaques.length);
 
-  return (
+  return (<S.StyleScope>{(
     <>
-      <section id="top" className={styles.hero}>
-        <video
+      <S.Hero id="top">
+        <S.HeroVideo
           src={hero?.url ?? "/assets/video/hero-video.mp4"}
           poster={hero?.imageUrl ?? "/assets/img/4.png"}
           autoPlay
           loop
           muted
           playsInline
-          className={styles.heroVideo}
         />
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroContent}>
-          <span className={styles.heroKicker}>Save Point3D — Coleção 2026</span>
+        <S.HeroOverlay />
+        <S.HeroContent>
+          <S.HeroKicker>Save Point3D — Coleção 2026</S.HeroKicker>
           <h1>{hero?.title ?? "Seu Universo Favorito Fora da Tela."}</h1>
           <p>
             {hero?.content ??
               "Action figures, estátuas e peças personalizadas produzidas em impressão 3D e finalizadas à mão."}
           </p>
-          <div className={styles.heroActions}>
-            <a href="#destaques" className={styles.primaryButton}>
+          <S.HeroActions>
+            <S.PrimaryButton href="#destaques">
               Explorar coleção
-            </a>
-            <a href="/personalizados" className={styles.secondaryButton}>
+            </S.PrimaryButton>
+            <S.SecondaryButton href="/personalizados">
               Criar peça personalizada
-            </a>
-          </div>
-        </div>
-      </section>
+            </S.SecondaryButton>
+          </S.HeroActions>
+        </S.HeroContent>
+      </S.Hero>
 
-      <section id="destaques" className={styles.destaques}>
-        <div className={styles.sectionHeader}>
+      <S.Destaques id="destaques">
+        <S.SectionHeader>
           <div>
-            <span className={styles.sectionNumber}>03 —</span>
+            <S.SectionNumber>03 —</S.SectionNumber>
             <h2>
               Destaques
               <br />
@@ -73,53 +72,54 @@ export default function Home({ onAddToCart }: HomeProps) {
             Peças selecionadas pelo estúdio — do guerreiro clássico à edição
             totalmente personalizada.
           </p>
-        </div>
-        <div className={styles.destaquesCarousel}>
-          <div ref={trackRef} className={styles.destaquesGrid}>
+        </S.SectionHeader>
+        <S.DestaquesCarousel>
+          <S.DestaquesGrid ref={trackRef}>
             {destaques.map((p) => (
-              <ProductCard
-                key={p.id}
-                product={p}
-                onAddToCart={onAddToCart}
-                variant="light"
-              />
+              <S.CarouselItem key={p.id}>
+                <ProductCard
+                  product={p}
+                  onAddToCart={onAddToCart}
+                  variant="light"
+                />
+              </S.CarouselItem>
             ))}
-          </div>
+          </S.DestaquesGrid>
 
-          <button
+          <S.CarouselControl
             type="button"
-            className={`${styles.carouselControl} ${styles.carouselControlPrevious}`}
+            $direction="previous"
             aria-label="Mostrar produtos anteriores"
             disabled={!canScrollPrevious}
             onClick={() => scrollOneItem(-1)}
           >
             &#8249;
-          </button>
+          </S.CarouselControl>
 
-          <button
+          <S.CarouselControl
             type="button"
-            className={`${styles.carouselControl} ${styles.carouselControlNext}`}
+            $direction="next"
             aria-label="Mostrar próximos produtos"
             disabled={!canScrollNext}
             onClick={() => scrollOneItem(1)}
           >
             &#8250;
-          </button>
-        </div>
-      </section>
+          </S.CarouselControl>
+        </S.DestaquesCarousel>
+      </S.Destaques>
 
-      <section id="categorias" className={styles.categorias}>
+      <S.Categorias id="categorias">
         <h2>
           Encontre seu
           <br />
           próximo checkpoint.
         </h2>
-        <div className={styles.categoriasGrid}>
+        <S.CategoriasGrid>
           {category.map((post, index) => (
             <CategoryCard key={post.id} post={post} index={index} />
           ))}
-        </div>
-      </section>
+        </S.CategoriasGrid>
+      </S.Categorias>
 
       <div id="personalizados">
         <Personalizados article={articles} />
@@ -136,5 +136,5 @@ export default function Home({ onAddToCart }: HomeProps) {
       </div>
       <StatsSection />
     </>
-  );
+  )}</S.StyleScope>);
 }

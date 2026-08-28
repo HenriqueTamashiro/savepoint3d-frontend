@@ -1,4 +1,4 @@
-import styles from "../../style/components/CategoryCard";
+import styles, { StyleScope } from "../../style/components/CategoryCard";
 import { Post } from "../../types/post";
 
 interface CategoryCardProps {
@@ -11,7 +11,7 @@ export default function CategoryCard({ post, index }: CategoryCardProps) {
   const tall = index === 0 || index === 2 || index === 4;
   const showImage = index % 2 === 0 && Boolean(post.imageUrl);
 
-  return (
+  return (<StyleScope>{(
     <a href="#" className={`${styles.card} ${tall ? styles.tall : ""}`}>
       {showImage && (
         <img
@@ -29,5 +29,5 @@ export default function CategoryCard({ post, index }: CategoryCardProps) {
         <span className={styles.arrow}>→</span>
       </div>
     </a>
-  );
+  )}</StyleScope>);
 }

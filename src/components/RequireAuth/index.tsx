@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthSession } from "../../types/auth";
 import { validateAuthSession } from "../../services/auth";
+import { ValidationScreen } from "./styles";
 
 interface RequireAuthProps {
   children: ReactNode;
@@ -24,7 +25,7 @@ export default function RequireAuth({ children, roles }: RequireAuthProps) {
   }, []);
 
   if (checking) {
-    return <main aria-busy="true" aria-label="Validando sessão" style={{ minHeight: "100vh", display: "grid", placeItems: "center", background: "#111", color: "#b6ff1a" }}>VALIDANDO ACESSO…</main>;
+    return <ValidationScreen aria-busy="true" aria-label="Validando sessão">VALIDANDO ACESSO…</ValidationScreen>;
   }
 
   if (!session) {

@@ -1,4 +1,82 @@
-import headerStyles from "./SectionHeader.module.css";
-import tileStyles from "./InstagramTiles.module.css";
+import styled from "styled-components";
 
-export default { ...headerStyles, ...tileStyles };
+export const TileImage = styled.img<{ $objectPosition?: string }>`
+  object-position: ${({ $objectPosition }) => $objectPosition};
+`;
+
+export const StyleScope = styled.div`
+  display: contents;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2px;
+}
+
+.tile {
+  aspect-ratio: 1 / 1;
+  background: var(--color-ink-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tile:hover img {
+  transform: scale(1.06);
+}
+
+.section {
+  padding: 0 56px 120px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.headerRow h2 {
+  margin: 0;
+  font-size: clamp(32px, 4.6vw, 54px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.headerRow a {
+  background: var(--color-ink);
+  color: #f2f2f0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 14px 26px;
+}
+
+.headerRow a:hover {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
+
+`;
+
+const styles = {
+  "grid": "grid",
+  "headerRow": "headerRow",
+  "section": "section",
+  "tile": "tile",
+} as const;
+
+export default styles;

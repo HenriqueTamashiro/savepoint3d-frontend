@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Product } from "../../types/product";
 import { formatPrice } from "../ProductCard/handler";
-import styles from "../../style/components/PremiumCollection";
+import styles, { StyleScope } from "../../style/components/PremiumCollection";
 
 interface PremiumCollectionProps {
   products: Product[];
@@ -15,7 +15,7 @@ export default function PremiumCollection({ products }: PremiumCollectionProps) 
       behavior: "smooth",
     });
 
-  return (
+  return (<StyleScope>{(
     <section className={styles.section}>
       <div className={styles.header}>
         <div>
@@ -54,5 +54,5 @@ export default function PremiumCollection({ products }: PremiumCollectionProps) 
         ))}
       </div>
     </section>
-  );
+  )}</StyleScope>);
 }
