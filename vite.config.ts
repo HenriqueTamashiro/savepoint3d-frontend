@@ -31,11 +31,21 @@ export async function findRoute(
   throw new Error(`Backend não encontrado na porta ${firstPort}`);
 }
 
-export default defineConfig(async () => {
+export default defineConfig(async ({ command }) => {
+  const config = {
+    plugins: [react()],
+  };
+
+  // The proxy is only used by Vite's development server. Resolving the
+  // backend during a production build makes CI depend on a local service.
+  if (command === "build") {
+    return config;
+  }
+
   const backendUrl = await findRoute(3000, 10);
 
   return {
-    plugins: [react()],
+    ...config,
     server: {
       proxy: {
         "/api": {
