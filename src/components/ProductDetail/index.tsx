@@ -2,7 +2,7 @@ import { Product } from "../../types/product";
 import * as S from "../../style/pages/Products.styles";
 import useGetProduct from "../../hooks/useUrlParser";
 import stylesProduct, { ProductStyle } from "../../style/components/Product";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { formatPrice, paymentCalc } from "./handler";
 
 interface ItemProps {
@@ -12,7 +12,6 @@ interface ItemProps {
 
 export default function ProductDetail({ products, onAddToCart }: ItemProps) {
   const productDetailed = useGetProduct(products);
-  const [imageProduct, setImageProduct] = useState(0);
 
   useEffect(() => {}, []);
 
