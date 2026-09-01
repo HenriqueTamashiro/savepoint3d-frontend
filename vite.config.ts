@@ -32,10 +32,10 @@ export async function findRoute(
 }
 
 export default defineConfig(async ({ command }) => {
-  const backendUrl = await findRoute(3000, 10);
   const config = { plugins: [react()] };
 
   if (command === "build") return config;
+  const backendUrl = await findRoute(3000, 10);
 
   return {
     ...config,
