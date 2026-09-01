@@ -12,12 +12,16 @@ interface ItemProps {
 
 export default function ProductDetail({ products, onAddToCart }: ItemProps) {
   const productDetailed = useGetProduct(products);
-  const [imageProduct, setImageProduct] = useState(0);
+  const [imageProduct, setImageProduct] = useState<string | null>(null);
 
   useEffect(() => {}, []);
 
   if (!productDetailed) {
     return <S.Page>Produto não encontrado</S.Page>;
+  }
+
+  function showImg(imgUrl: string): void {
+    setImageProduct(imgUrl);
   }
 
   return (
@@ -27,12 +31,14 @@ export default function ProductDetail({ products, onAddToCart }: ItemProps) {
           <div key={productDetailed?.id} className={stylesProduct.article}>
             <div className={stylesProduct.gallery}>
               <img
-                src={productDetailed?.imageUrl}
+                src={"/assets/img/1.png"}
                 className={stylesProduct.img}
+                onClick={() => showImg("/assets/img/1.png")}
               />
               <img
                 src={productDetailed?.imageUrl}
                 className={stylesProduct.img}
+                onClick={() => showImg(productDetailed.imageUrl)}
               />
               <img
                 src={productDetailed?.imageUrl}
@@ -40,15 +46,14 @@ export default function ProductDetail({ products, onAddToCart }: ItemProps) {
               />
             </div>
             <div className={stylesProduct.productImage}>
-              <img src={productDetailed?.imageUrl} />
+              <img src={imageProduct ?? productDetailed.imageUrl} />
             </div>
 
             <article className={stylesProduct.infoSector}>
               <div className={stylesProduct.titleArea}>
                 <div className={stylesProduct.informative}>
                   <span className={stylesProduct.material}>
-                    {productDetailed.categoryLabel} -{" "}
-                    <span>{productDetailed.scale}</span>
+                    {productDetailed.categoryLabel} - {productDetailed.scale}
                   </span>
                   <div className={stylesProduct.stock}>
                     {productDetailed.stock} Uni.
@@ -58,7 +63,7 @@ export default function ProductDetail({ products, onAddToCart }: ItemProps) {
                   <div className={stylesProduct.name}>
                     {productDetailed.name}
                   </div>
-                  <text>Avaliação: * * * *</text>
+                  <text>Avaliação: </text>
                 </div>
               </div>
 
@@ -74,7 +79,7 @@ export default function ProductDetail({ products, onAddToCart }: ItemProps) {
 
               <div className={stylesProduct.priceArea}>
                 <div>
-                  <span>OFERTA</span>
+                  <span className={stylesProduct.tagOffer}>OFERTA</span>
                   <span className={stylesProduct.offer}> De: R$1000,00</span>
                 </div>
                 <span className={stylesProduct.price}>
@@ -89,11 +94,23 @@ export default function ProductDetail({ products, onAddToCart }: ItemProps) {
                 </span>
               </div>
 
-              <div>
-                <button onClick={() => onAddToCart(productDetailed.id)}>
+              <div className={stylesProduct.buttonArea}>
+                <div className={stylesProduct.quantityButton}>
+                  <button>-</button>
+                  <output>{productDetailed.stock}</output>
+                  <button>+</button>
+                </div>
+                <button
+                  className={stylesProduct.addButton}
+                  onClick={() => onAddToCart(productDetailed.id)}
+                >
                   Adicionar ao carrinho
                 </button>
-                <button onClick={() => onAddToCart(productDetailed.id)}>
+                <></>
+                <button
+                  className={stylesProduct.buyButton}
+                  onClick={() => onAddToCart(productDetailed.id)}
+                >
                   Comprar
                 </button>
               </div>

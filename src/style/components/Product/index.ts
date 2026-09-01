@@ -37,8 +37,8 @@ export const ProductStyle = styled.div`
     img {
       object-fit: cover;
 
-      border-left: 1px solid var(--color-accent);
-      border-right: 1px solid var(--color-accent);
+      border-left: 1px solid var(--color-darkAccent);
+      border-right: 1px solid var(--color-darkAccent);
     }
   }
 
@@ -48,13 +48,14 @@ export const ProductStyle = styled.div`
     grid-template-rows: 1fr 1fr 1fr 1fr;
     gap: 15px;
     padding: 5px;
+    background: var(--color-muted-black);
 
     img {
       object-fit: cover;
       width: 100%;
       height: 100%;
 
-      border: 0.1px solid var(--color-accent);
+      border: 0.1px solid var(--color-darkAccent);
     }
   }
 
@@ -65,10 +66,10 @@ export const ProductStyle = styled.div`
   .infoSector {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto 1fr 1fr auto;
     align-content: start;
 
-    padding: 95px;
+    padding: 65px;
 
     width: 100%;
     height: 100%;
@@ -76,7 +77,7 @@ export const ProductStyle = styled.div`
     .titleArea {
       display: grid;
       grid-template-columns: 1fr;
-      border-bottom: 1px solid var(--color-accent);
+      border-bottom: 1px solid var(--color-darkAccent);
       padding-bottom: 5px;
 
       .name {
@@ -148,14 +149,28 @@ export const ProductStyle = styled.div`
 
       .offer {
         font-size: 16px;
+        padding: 0 0 0 5px;
         color: var(--color-muted-dark);
         text-decoration: 1px line-through;
       }
 
       .payment {
+        padding: 5px 0 0 0;
+        font-size: 14px;
         .installmments {
           color: var(--color-accent);
         }
+      }
+
+      .tagOffer {
+        background: var(--color-accent);
+        color: var(--color-ink);
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 1px 1px;
+        height: 30px;
       }
     }
 
@@ -164,12 +179,73 @@ export const ProductStyle = styled.div`
       width: 100%;
       height: 100%;
     }
+
+    .buttonArea {
+      display: grid;
+      grid-template-columns: 122px minmax(0, 1fr);
+      grid-template-rows: 58px 58px;
+      gap: 10px;
+      width: 100%;
+
+      button {
+        cursor: pointer;
+      }
+
+      .buyButton {
+        font-size: 32px;
+        grid-column: 1 / -1;
+        background: var(--color-accent);
+        border: none;
+      }
+      .buyButton:hover {
+        background: var(--color-clearAccent);
+        color: #000000;
+        transition: 200ms;
+      }
+
+      .addButton {
+        background: var(--color-ink);
+        color: #ffffff;
+        border: 0.1px solid var(--color-darkAccent);
+      }
+      .addButton:hover {
+        background: var(--color-inkClearSoft);
+        color: #ffffff;
+        transition: 200ms;
+      }
+
+      .quantityButton {
+        display: grid;
+        grid-template-columns: 40px auto 40px;
+        border: 0.1px solid var(--color-darkAccent);
+        background: var(--color-ink);
+
+        button {
+          background: var(--color-muted-black);
+          color: #ffffff;
+          border: none;
+          font-size: 28px;
+          transition: 200ms;
+        }
+        button:hover {
+          background: var(--color-accent);
+          color: #000;
+          transition: 200ms;
+        }
+
+        output {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
   }
 
   @media (max-width: 900px) {
     .article {
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto;
+      grid-template-rows: auto auto;
     }
   }
 `;
@@ -184,13 +260,13 @@ const stylesProduct = {
   article: "article",
 
   infoSector: "infoSector",
+  informative: "informative",
 
   titleArea: "titleArea",
   textArea: "textArea",
   priceArea: "priceArea",
   buttonArea: "buttonArea",
   nameArea: "nameArea",
-  informative: "informative",
 
   material: "material",
   meta: "meta",
@@ -201,8 +277,11 @@ const stylesProduct = {
   tag: "tag",
   addButton: "addButton",
   offer: "offer",
+  tagOffer: "tagOffer",
   payment: "payment",
   installmments: "installmments",
+  buyButton: "buyButton",
+  quantityButton: "quantityButton",
 } as const;
 
 export default stylesProduct;
