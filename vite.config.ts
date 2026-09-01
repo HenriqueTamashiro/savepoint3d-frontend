@@ -11,7 +11,7 @@ export async function findRoute(
 
     try {
       const response = await fetch(`${url}/api`, {
-        signal: AbortSignal.timeout(500),
+        signal: AbortSignal.timeout(1000),
       });
 
       if (!response.ok) {
@@ -31,11 +31,14 @@ export async function findRoute(
   throw new Error(`Backend não encontrado na porta ${firstPort}`);
 }
 
-export default defineConfig(async () => {
+export default defineConfig(async ({ command }) => {
   const backendUrl = await findRoute(3000, 10);
+  const config = { plugins: [react()] };
+
+  if (command === "build") return config;
 
   return {
-    plugins: [react()],
+    ...config,
     server: {
       proxy: {
         "/api": {
