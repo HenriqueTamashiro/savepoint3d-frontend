@@ -11,7 +11,7 @@ export async function findRoute(
 
     try {
       const response = await fetch(`${url}/api`, {
-        signal: AbortSignal.timeout(500),
+        signal: AbortSignal.timeout(1000),
       });
 
       if (!response.ok) {
@@ -32,17 +32,10 @@ export async function findRoute(
 }
 
 export default defineConfig(async ({ command }) => {
-  const config = {
-    plugins: [react()],
-  };
-
-  // The proxy is only used by Vite's development server. Resolving the
-  // backend during a production build makes CI depend on a local service.
-  if (command === "build") {
-    return config;
-  }
-
   const backendUrl = await findRoute(3000, 10);
+  const config = { plugins: [react()] };
+
+  if (command === "build") return config;
 
   return {
     ...config,
