@@ -52,6 +52,7 @@ export const StyleScope = styled.div`
     object-fit: cover;
     object-position: center;
     transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
   }
 
   .hovered .image {
