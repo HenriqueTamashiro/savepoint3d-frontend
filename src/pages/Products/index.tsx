@@ -6,7 +6,7 @@ import { Product } from "../../types/product";
 
 interface ProductsProps {
   products: Product[];
-  onAddToCart: (id: string) => void;
+  onAddToCart: (id: string, quantity: number) => void;
 }
 
 export default function Products({ products, onAddToCart }: ProductsProps) {

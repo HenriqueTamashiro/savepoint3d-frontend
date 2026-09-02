@@ -18,7 +18,7 @@ interface AppRoutesProps {
   cart: CartLine[];
   products: Product[];
   couponCode: string;
-  onAddToCart: (id: string) => void;
+  onAddToCart: (id: string, quantity: number) => void;
   onCheckoutComplete: () => void;
 }
 

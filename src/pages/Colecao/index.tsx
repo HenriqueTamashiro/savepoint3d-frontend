@@ -4,7 +4,7 @@ import { Post } from "../../types/post";
 import * as S from "../../style/pages/Colecao.styles";
 
 interface ColecaoProps {
-  onAddToCart: (id: string) => void;
+  onAddToCart: (id: string, quantity: number) => void;
 }
 
 interface DioramaSectionProps {

@@ -11,7 +11,7 @@ import { DioramaSection, LancamentosSection } from "../Colecao";
 import * as S from "../../style/pages/Home.styles";
 
 interface HomeProps {
-  onAddToCart: (id: string) => void;
+  onAddToCart: (id: string, quantity: number) => void;
 }
 
 export default function Home({ onAddToCart }: HomeProps) {
