@@ -2,19 +2,23 @@ import { Product } from "../../types/product";
 import * as S from "../../style/pages/Products.styles";
 import useGetProduct from "../../hooks/useUrlParser";
 import stylesProduct, { ProductStyle } from "../../style/components/Product";
-import { useEffect, useState } from "react";
-import { formatPrice, paymentCalc } from "./handler";
+import { useState } from "react";
+import {
+  formatPrice,
+  paymentCalc,
+  increaseQuantity,
+  descreaseQuantity,
+} from "./handler";
 
 interface ItemProps {
   products: Product[];
-  onAddToCart: (id: string) => void;
+  onAddToCart: (id: string, quantity: number) => void;
 }
 
 export default function ProductDetail({ products, onAddToCart }: ItemProps) {
   const productDetailed = useGetProduct(products);
   const [imageProduct, setImageProduct] = useState<string | null>(null);
-
-  useEffect(() => {}, []);
+  const [quantity, setQuantity] = useState(1);
 
   if (!productDetailed) {
     return <S.Page>Produto não encontrado</S.Page>;
@@ -96,20 +100,33 @@ export default function ProductDetail({ products, onAddToCart }: ItemProps) {
 
               <div className={stylesProduct.buttonArea}>
                 <div className={stylesProduct.quantityButton}>
-                  <button>-</button>
-                  <output>{productDetailed.stock}</output>
-                  <button>+</button>
+                  <button
+                    onClick={() => setQuantity(descreaseQuantity(quantity))}
+                  >
+                    -
+                  </button>
+                  <output>{quantity}</output>
+                  <button
+                    onClick={() =>
+                      setQuantity(
+                        increaseQuantity(quantity, productDetailed.stock),
+                      )
+                    }
+                    disabled={quantity < 1}
+                  >
+                    +
+                  </button>
                 </div>
                 <button
                   className={stylesProduct.addButton}
-                  onClick={() => onAddToCart(productDetailed.id)}
+                  onClick={() => onAddToCart(productDetailed.id, quantity)}
                 >
                   Adicionar ao carrinho
                 </button>
                 <></>
                 <button
                   className={stylesProduct.buyButton}
-                  onClick={() => onAddToCart(productDetailed.id)}
+                  onClick={() => onAddToCart(productDetailed.id, quantity)}
                 >
                   Comprar
                 </button>

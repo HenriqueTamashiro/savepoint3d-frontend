@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ProductStyle = styled.div`
   --width-gallery: 100px;
-  --title-size: 5rem;
+  --title-size: clamp(2.5rem, 4.2vw, 5rem);
 
   background: var(--color-ink-soft);
   color: white;
@@ -12,7 +12,7 @@ export const ProductStyle = styled.div`
     justify-content: center;
 
     width: 100%;
-    max-height: 850px;
+    padding-inline: clamp(0px, 1vw, 16px);
   }
 
   .container {
@@ -22,20 +22,39 @@ export const ProductStyle = styled.div`
     display: grid;
     background: var(--color-ink-soft);
     width: min(100%, 1580px);
+    min-width: 0;
+    height: clamp(620px, calc(100vh - 96px), 850px);
+    min-height: 0;
+    max-height: 850px;
 
     grid-template-columns:
       calc(var(--width-gallery) + 5px)
       minmax(300px, 520px)
       minmax(280px, 1fr);
-    grid-template-rows: auto;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+    overflow: hidden;
   }
 
   .productImage {
     width: 100%;
-    padding: 0 5px 0 5px;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    max-height: 100%;
+    aspect-ratio: 5 / 8;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: var(--color-muted-black);
 
     img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
       object-fit: cover;
+      object-position: center;
 
       border-left: 1px solid var(--color-darkAccent);
       border-right: 1px solid var(--color-darkAccent);
@@ -45,12 +64,16 @@ export const ProductStyle = styled.div`
   .gallery {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, minmax(0, 1fr));
     gap: 15px;
     padding: 5px;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
     background: var(--color-muted-black);
 
     img {
+      display: block;
       object-fit: cover;
       width: 100%;
       height: 100%;
@@ -73,6 +96,8 @@ export const ProductStyle = styled.div`
 
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
 
     .titleArea {
       display: grid;
@@ -198,8 +223,8 @@ export const ProductStyle = styled.div`
         border: none;
       }
       .buyButton:hover {
-        background: var(--color-clearAccent);
-        color: #000000;
+        background: var(--color-accent);
+        color: #fff;
         transition: 200ms;
       }
 
@@ -242,10 +267,139 @@ export const ProductStyle = styled.div`
     }
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1200px) {
+    --width-gallery: 90px;
+    --title-size: clamp(2.5rem, 7vw, 4.75rem);
+
+    .wrapper {
+      padding-inline: 0;
+    }
+
     .article {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: var(--width-gallery) minmax(0, 1fr);
+      grid-template-rows: minmax(520px, 72vh) auto;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      overflow: hidden;
+    }
+
+    .gallery,
+    .productImage {
+      grid-row: 1;
+    }
+
+    .gallery {
+      grid-column: 1;
+      gap: 10px;
+    }
+
+    .productImage {
+      grid-column: 2;
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    .infoSector {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      grid-template-rows: auto auto auto auto;
+      gap: clamp(24px, 4vw, 44px);
+      height: auto;
+      padding: clamp(36px, 6vw, 72px);
+
+      .textArea {
+        height: auto;
+        padding-top: 0;
+      }
+    }
+  }
+
+  @media (max-width: 700px) {
+    --title-size: clamp(2.25rem, 11vw, 4rem);
+
+    .article {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+    }
+
+    .gallery {
+      grid-column: 1;
+      grid-row: 1;
+      grid-template-columns: repeat(3, minmax(76px, 96px));
+      grid-template-rows: 96px;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .productImage {
+      grid-column: 1;
+      grid-row: 2;
+      width: 100%;
+      height: auto;
+      padding: 0;
+      aspect-ratio: 1122 / 1402;
+
+      img {
+        border: 0;
+      }
+    }
+
+    .infoSector {
+      grid-column: 1;
+      grid-row: 3;
+      gap: 28px;
+      padding: 36px 24px 44px;
+
+      .titleArea {
+        .informative {
+          align-items: flex-start;
+          flex-wrap: wrap;
+          gap: 12px;
+
+          .material {
+            justify-content: flex-start;
+            font-size: 14px;
+          }
+
+          .stock {
+            flex: none;
+            font-size: 12px;
+          }
+        }
+      }
+
+      .priceArea {
+        .price {
+          font-size: clamp(2.25rem, 12vw, 3.5rem);
+        }
+      }
+
+      .buttonArea {
+        grid-template-columns: 122px minmax(0, 1fr);
+      }
+    }
+  }
+
+  @media (max-width: 420px) {
+    .infoSector {
+      padding-inline: 18px;
+
+      .buttonArea {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(3, 56px);
+
+        .quantityButton {
+          grid-template-columns: 1fr 48px 1fr;
+        }
+
+        .buyButton {
+          grid-column: 1;
+        }
+      }
     }
   }
 `;

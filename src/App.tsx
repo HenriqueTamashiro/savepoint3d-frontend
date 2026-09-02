@@ -49,7 +49,7 @@ function AppContent() {
     window.localStorage.setItem("savepoint3d:cart", JSON.stringify(cart));
   }, [cart]);
 
-  function addToCart(id: string) {
+  function addToCart(id: string, quantity: number) {
     const product = products.find((item) => item.id === id);
     if (product?.stock === 0) return;
     setCart((prev) => {
@@ -62,8 +62,8 @@ function AppContent() {
       )
         return prev;
       return existing
-        ? prev.map((c) => (c.id === id ? { ...c, qty: c.qty + 1 } : c))
-        : [...prev, { id, qty: 1 }];
+        ? prev.map((c) => (c.id === id ? { ...c, qty: c.qty + quantity } : c))
+        : [...prev, { id, qty: quantity }];
     });
     setCartOpen(true);
   }

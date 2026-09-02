@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 export async function findRoute(
   firstPort: number,
@@ -32,7 +33,36 @@ export async function findRoute(
 }
 
 export default defineConfig(async ({ command }) => {
-  const config = { plugins: [react()] };
+  const config = {
+    plugins: [
+      react(),
+      ViteImageOptimizer({
+        test: /\.(png|jpe?g|webp)$/i,
+        includePublic: true,
+        logStats: true,
+        png: {
+          quality: 85,
+          compressionLevel: 9,
+          adaptiveFiltering: true,
+          palette: true,
+        },
+        jpeg: {
+          quality: 82,
+          progressive: true,
+          mozjpeg: true,
+        },
+        jpg: {
+          quality: 82,
+          progressive: true,
+          mozjpeg: true,
+        },
+        webp: {
+          quality: 82,
+          effort: 5,
+        },
+      }),
+    ],
+  };
 
   if (command === "build") return config;
   const backendUrl = await findRoute(3000, 10);

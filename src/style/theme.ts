@@ -4,7 +4,7 @@ export const theme = {
     ink: "#111111",
     inkSoft: "#1a1a1a",
     inkClearSoft: "#292929",
-    clearAccent: "#91ff00",
+    clearAccent: "rgb(168, 226, 43)",
     accent: "#a7e918",
     darkAccent: "#598300",
     muted: "#686868",

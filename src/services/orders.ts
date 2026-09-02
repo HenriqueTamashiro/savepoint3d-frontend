@@ -47,8 +47,12 @@ export async function createOrder(
 ): Promise<Order> {
   const response = await authenticatedRequest("/api/orders", {
     method: "POST",
+    headers: { "Idempotency-Key": crypto.randomUUID() },
     body: JSON.stringify({
-      items: cart.map((line) => ({ productId: line.id, quantity: line.qty })),
+      items: cart.map((line) => ({
+        productId: line.id,
+        quantity: line.qty,
+      })),
       couponCode: couponCode || undefined,
     }),
   });

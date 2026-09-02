@@ -4,7 +4,7 @@ import styles, { StyleScope } from "../../style/components/ProductCard";
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart: (id: string) => void;
+  onAddToCart: (id: string, quantity: number) => void;
   variant?: "light" | "dark";
 }
 
@@ -15,45 +15,51 @@ export default function ProductCard({
 }: ProductCardProps) {
   const { hovered, onMouseEnter, onMouseLeave } = useProductCardHover();
 
-  return (<StyleScope>{(
-    <article
-      className={`${styles.card} ${variant === "light" ? styles.light : styles.dark} ${hovered ? styles.hovered : ""}`}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <div className={styles.imageWrap}>
-        <div className={styles.glow} />
-        <img
-          src={product.imageUrl}
-          alt={product.alt}
-          width={1122}
-          height={1402}
-          loading="lazy"
-          className={styles.image}
-        />
-        <span className={styles.tag}>{product.tag}</span>
-        <span className={styles.stock}>
-          {product.stock === null ? "Sob encomenda" : `${product.stock} Uni.`}
-        </span>
-      </div>
-      <div className={styles.body}>
-        <span className={styles.meta}>
-          {product.categoryLabel} · {product.scale}
-        </span>
-        <h3 className={styles.name}>{product.name}</h3>
-        <span className={styles.material}>{product.material}</span>
-        <div className={styles.footer}>
-          <span className={styles.price}>{formatPrice(product.price)}</span>
-          <button
-            type="button"
-            onClick={() => onAddToCart(product.id)}
-            className={styles.addButton}
-            disabled={product.stock === 0}
-          >
-            {product.stock === 0 ? "Esgotado" : "Adicionar"}
-          </button>
-        </div>
-      </div>
-    </article>
-  )}</StyleScope>);
+  return (
+    <StyleScope>
+      {
+        <article
+          className={`${styles.card} ${variant === "light" ? styles.light : styles.dark} ${hovered ? styles.hovered : ""}`}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        >
+          <div className={styles.imageWrap}>
+            <div className={styles.glow} />
+            <img
+              src={product.imageUrl}
+              alt={product.alt}
+              width={1122}
+              height={1402}
+              loading="lazy"
+              className={styles.image}
+            />
+            <span className={styles.tag}>{product.tag}</span>
+            <span className={styles.stock}>
+              {product.stock === null
+                ? "Sob encomenda"
+                : `${product.stock} Uni.`}
+            </span>
+          </div>
+          <div className={styles.body}>
+            <span className={styles.meta}>
+              {product.categoryLabel} · {product.scale}
+            </span>
+            <h3 className={styles.name}>{product.name}</h3>
+            <span className={styles.material}>{product.material}</span>
+            <div className={styles.footer}>
+              <span className={styles.price}>{formatPrice(product.price)}</span>
+              <button
+                type="button"
+                onClick={() => onAddToCart(product.id, 1)}
+                className={styles.addButton}
+                disabled={product.stock === 0}
+              >
+                {product.stock === 0 ? "Esgotado" : "Adicionar"}
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </StyleScope>
+  );
 }
