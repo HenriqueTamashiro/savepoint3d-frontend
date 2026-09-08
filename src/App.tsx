@@ -34,6 +34,16 @@ function AppContent() {
   const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
+    if (location.pathname.startsWith("/products/")) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto",
+      });
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
     fetchProducts()
       .then((fetchedProducts) => {
         setProducts(fetchedProducts);
@@ -51,9 +61,14 @@ function AppContent() {
 
   function addToCart(id: string, quantity: number) {
     const product = products.find((item) => item.id === id);
-    if (product?.stock === 0) return;
+    if (product?.stock === 0 || null) return;
+
     setCart((prev) => {
       const existing = prev.find((c) => c.id === id);
+      if (!product || product.stock === null || product.stock === 0) {
+        return prev;
+      }
+
       if (
         product?.stock !== null &&
         product?.stock !== undefined &&
@@ -61,9 +76,26 @@ function AppContent() {
         existing.qty >= product.stock
       )
         return prev;
-      return existing
-        ? prev.map((c) => (c.id === id ? { ...c, qty: c.qty + quantity } : c))
-        : [...prev, { id, qty: quantity }];
+      if (!existing) {
+        return [...prev, { id, qty: quantity }];
+      }
+
+      return prev.map((cartItem) => {
+        if (cartItem.id !== id) return cartItem;
+
+        const stock = product.stock;
+        const requestedQuantity = cartItem.qty + quantity;
+
+        const updatedQuantity =
+          stock === null
+            ? requestedQuantity
+            : Math.min(requestedQuantity, stock);
+
+        return {
+          ...cartItem,
+          qty: updatedQuantity,
+        };
+      });
     });
     setCartOpen(true);
   }

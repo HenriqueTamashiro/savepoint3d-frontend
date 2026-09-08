@@ -12,7 +12,7 @@ export async function findRoute(
 
     try {
       const response = await fetch(`${url}/api`, {
-        signal: AbortSignal.timeout(1000),
+        signal: AbortSignal.timeout(10000),
       });
 
       if (!response.ok) {

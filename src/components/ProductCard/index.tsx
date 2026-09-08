@@ -1,6 +1,7 @@
 import { Product } from "../../types/product";
 import { useProductCardHover, formatPrice } from "./handler";
 import styles, { StyleScope } from "../../style/components/ProductCard";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
   product: Product;
@@ -13,7 +14,11 @@ export default function ProductCard({
   onAddToCart,
   variant = "dark",
 }: ProductCardProps) {
+  const navigate = useNavigate();
   const { hovered, onMouseEnter, onMouseLeave } = useProductCardHover();
+  function handleClick(id: string) {
+    navigate(`/products/${id}`);
+  }
 
   return (
     <StyleScope>
@@ -32,6 +37,7 @@ export default function ProductCard({
               height={1402}
               loading="lazy"
               className={styles.image}
+              onClick={() => handleClick(product.id)}
             />
             <span className={styles.tag}>{product.tag}</span>
             <span className={styles.stock}>
