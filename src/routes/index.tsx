@@ -13,6 +13,7 @@ import Personalizados from "../pages/Personalizados";
 import Processo from "../pages/Processo";
 import Products from "../pages/Products";
 import { CartLine, Product } from "../types/product";
+import TestCard from "../pages/Test";
 
 interface AppRoutesProps {
   cart: CartLine[];
@@ -88,6 +89,8 @@ export default function AppRoutes({
           <ProductDetail products={products} onAddToCart={onAddToCart} />
         }
       />
+
+      <Route path="/test" element={<TestCard />} />
     </Routes>
   );
 }

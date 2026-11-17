@@ -1,5 +1,5 @@
 import { Order, OrderStatus } from "./order";
-import { ItemLocation, Product } from "./product";
+import { ItemLocation, Product, ApiProduct, ProductImageInput } from "./product";
 
 export type AdminRole = "USER" | "MOD" | "ADMIN";
 
@@ -8,7 +8,13 @@ export interface AdminProduct extends Product {
   post: { id: string; title: string };
 }
 
+export interface ApiAdminProduct extends ApiProduct {
+  active: boolean;
+  post: { id: string; title: string };
+}
+
 export interface AdminProductInput {
+  galleryImages?: ProductImageInput[];
   category: string;
   categoryLabel: string;
   name: string;

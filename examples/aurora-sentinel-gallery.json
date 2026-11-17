@@ -1,0 +1,20 @@
+{
+  "galleryImages": [
+    {
+      "imageUrl": "/assets/img/aurora-sentinel/01-frente.png",
+      "alt": "Aurora Sentinel em vista de corpo inteiro com katana e base circular"
+    },
+    {
+      "imageUrl": "/assets/img/aurora-sentinel/02-lateral.png",
+      "alt": "Aurora Sentinel em vista lateral de três quartos"
+    },
+    {
+      "imageUrl": "/assets/img/aurora-sentinel/03-costas.png",
+      "alt": "Aurora Sentinel com destaque para as costas e a capa violeta"
+    },
+    {
+      "imageUrl": "/assets/img/aurora-sentinel/04-detalhe.png",
+      "alt": "Detalhe do rosto e da armadura da Aurora Sentinel"
+    }
+  ]
+}

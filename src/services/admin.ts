@@ -1,7 +1,9 @@
+import { normalizeProduct } from "./product-adapter";
 import {
   AdminOrder,
   AdminOrderInput,
   AdminProduct,
+  ApiAdminProduct,
   AdminProductInput,
   AdminUser,
   AdminUserInput,
@@ -32,44 +34,42 @@ async function adminRequest<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-function normalizeProduct(
-  product: AdminProduct & { price: number | string },
+function normalizeAdminProduct(
+  product: ApiAdminProduct,
 ): AdminProduct {
-  return { ...product, price: Number(product.price) };
+  return { ...product, ...normalizeProduct(product) };
 }
 
 export async function fetchAdminProducts(): Promise<AdminProduct[]> {
-  const products = await adminRequest<
-    (AdminProduct & { price: number | string })[]
-  >("/api/admin/products");
-  return products.map(normalizeProduct);
+  const products = await adminRequest<ApiAdminProduct[]>("/api/admin/products");
+  return products.map(normalizeAdminProduct);
 }
 
 export async function createAdminProduct(
   input: AdminProductInput,
 ): Promise<AdminProduct> {
-  const product = await adminRequest<AdminProduct & { price: number | string }>(
+  const product = await adminRequest<ApiAdminProduct>(
     "/api/admin/products",
     {
       method: "POST",
       body: JSON.stringify(input),
     },
   );
-  return normalizeProduct(product);
+  return normalizeAdminProduct(product);
 }
 
 export async function updateAdminProduct(
   id: string,
   input: AdminProductInput,
 ): Promise<AdminProduct> {
-  const product = await adminRequest<AdminProduct & { price: number | string }>(
+  const product = await adminRequest<ApiAdminProduct>(
     `/api/admin/products/${id}`,
     {
       method: "PATCH",
       body: JSON.stringify(input),
     },
   );
-  return normalizeProduct(product);
+  return normalizeAdminProduct(product);
 }
 
 export function removeAdminProduct(id: string): Promise<AdminProduct> {

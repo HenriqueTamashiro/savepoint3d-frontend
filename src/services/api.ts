@@ -1,9 +1,7 @@
+import { normalizeProduct } from "./product-adapter";
 import { Product, ApiProduct } from "../types/product";
 import { Post, PostType } from "../types/post";
 import { authenticatedFetch } from "./auth";
-
-// Stub service layer. Swap the bodies below for real fetch() calls to your backend
-// once the API exists (e.g. GET /api/products, POST /api/cart, POST /api/leads).
 
 export async function fetchProducts(category?: string): Promise<Product[]> {
   const params = new URLSearchParams();
@@ -17,17 +15,7 @@ export async function fetchProducts(category?: string): Promise<Product[]> {
 
   const dataTyped: ApiProduct[] = await Item.json();
 
-  return dataTyped.map((items) => {
-    const price = Number(items.price);
-
-    if (!Number.isFinite(price)) {
-      throw new Error("Preço incorreto!");
-    }
-    return {
-      ...items,
-      price,
-    };
-  });
+  return dataTyped.map(normalizeProduct);
 }
 
 export async function fetchPost(

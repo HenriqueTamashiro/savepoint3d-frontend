@@ -19,6 +19,7 @@ export const PRODUCTS: Product[] = [
     stock: 1,
     imageUrl: "/assets/img/1.png",
     alt: "Crimson Ronin, guerreiro em armadura preta e vermelha com katana",
+    galleryImages: [],
     location: "FEATURED",
   },
   {
@@ -33,6 +34,7 @@ export const PRODUCTS: Product[] = [
     stock: 1,
     imageUrl: "/assets/img/3.png",
     alt: "Neon Huntress, guerreira em armadura roxa com espada",
+    galleryImages: [],
     location: "FEATURED",
   },
   {
@@ -45,8 +47,14 @@ export const PRODUCTS: Product[] = [
     price: 1299.9,
     tag: "Sob encomenda",
     stock: 1,
-    imageUrl: "/assets/img/5.png",
+    imageUrl: "/assets/img/aurora-sentinel/01-frente.png",
     alt: "Aurora Sentinel, guerreira com katana sobre base personalizada Save Point3D",
+    galleryImages: [
+      { id: "aurora-example-1", position: 0, imageUrl: "/assets/img/aurora-sentinel/01-frente.png", alt: "Aurora Sentinel em vista de corpo inteiro com katana e base circular" },
+      { id: "aurora-example-2", position: 1, imageUrl: "/assets/img/aurora-sentinel/02-lateral.png", alt: "Aurora Sentinel em vista lateral de três quartos" },
+      { id: "aurora-example-3", position: 2, imageUrl: "/assets/img/aurora-sentinel/03-costas.png", alt: "Aurora Sentinel com destaque para as costas e a capa violeta" },
+      { id: "aurora-example-4", position: 3, imageUrl: "/assets/img/aurora-sentinel/04-detalhe.png", alt: "Detalhe do rosto e da armadura da Aurora Sentinel" },
+    ],
     location: "FEATURED",
   },
   {
@@ -61,6 +69,7 @@ export const PRODUCTS: Product[] = [
     stock: 1,
     imageUrl: "/assets/img/6.png",
     alt: "Titan Mech, mecha de combate em metal escuro",
+    galleryImages: [],
     location: null,
   },
   {
@@ -75,6 +84,7 @@ export const PRODUCTS: Product[] = [
     stock: 1,
     imageUrl: "/assets/img/7.png",
     alt: "Shadow Knight, guerreiro sombrio com espada e troféu",
+    galleryImages: [],
     location: null,
   },
 ];

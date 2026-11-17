@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ProductStyle = styled.div`
   --width-gallery: 100px;
-  --title-size: clamp(2.5rem, 4.2vw, 5rem);
+  --title-size: clamp(2rem, 3vw, 3.25rem);
 
   background: var(--color-ink-soft);
   color: white;
@@ -23,9 +23,7 @@ export const ProductStyle = styled.div`
     background: var(--color-ink-soft);
     width: min(100%, 1580px);
     min-width: 0;
-    height: clamp(620px, calc(100vh - 96px), 850px);
-    min-height: 0;
-    max-height: 850px;
+    min-height: 680px;
 
     grid-template-columns:
       calc(var(--width-gallery) + 5px)
@@ -37,6 +35,7 @@ export const ProductStyle = styled.div`
   }
 
   .productImage {
+    position: relative;
     width: 100%;
     height: 100%;
     min-width: 0;
@@ -62,11 +61,21 @@ export const ProductStyle = styled.div`
   }
 
   .gallery {
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--color-muted-black);
+    padding: 44px 5px;
+  }
+
+  .thumbnailList {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
     gap: 15px;
-    padding: 5px;
+    height: 100%;
     min-width: 0;
     min-height: 0;
     overflow: hidden;
@@ -82,6 +91,119 @@ export const ProductStyle = styled.div`
     }
   }
 
+  .thumbnail {
+    padding: 0;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border: 2px solid transparent;
+    background: var(--color-ink);
+    cursor: pointer;
+    opacity: 0.6;
+    transition:
+      opacity 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .thumbnail:hover,
+  .thumbnail[aria-pressed="true"] {
+    opacity: 1;
+    border-color: var(--color-accent);
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -4px;
+  }
+
+  .galleryControl {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(44px, 5vw, 72px);
+    height: 25%;
+    border: 0;
+    color: var(--color-accent);
+    font-size: 46px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .galleryPrevious {
+    left: 0;
+    background: linear-gradient(
+      90deg,
+      var(--color-ink-transparent),
+      transparent
+    );
+  }
+
+  .galleryNext {
+    right: 0;
+    background: linear-gradient(
+      270deg,
+      var(--color-ink-transparent),
+      transparent
+    );
+  }
+
+  .productImage:hover .galleryControl:not(:disabled),
+  .productImage:focus-within .galleryControl:not(:disabled),
+  .gallery:hover .galleryControl:not(:disabled),
+  .gallery:focus-within .galleryControl:not(:disabled) {
+    opacity: 1;
+  }
+
+  .gallery .galleryControl {
+    left: 0;
+    top: auto;
+    transform: none;
+    width: 100%;
+    height: 44px;
+    z-index: 1;
+
+    span {
+      display: inline-block;
+      transform: rotate(90deg);
+    }
+  }
+
+  .gallery .thumbnailPrevious {
+    top: 0;
+    background: linear-gradient(180deg, var(--color-ink-transparent), transparent);
+  }
+
+  .thumbnailNext {
+    bottom: 0;
+    background: linear-gradient(0deg, var(--color-ink-transparent), transparent);
+  }
+
+  .galleryControl:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .imageCounter {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 12px;
+    background: var(--color-ink);
+    color: white;
+    border-radius: 20px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (hover: none) {
+    .galleryControl:not(:disabled) {
+      opacity: 1;
+    }
+  }
+
   .product {
     background: var(--color-ink);
   }
@@ -89,10 +211,11 @@ export const ProductStyle = styled.div`
   .infoSector {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr 1fr auto;
+    grid-template-rows: auto minmax(150px, 1fr) auto auto;
+    gap: 18px;
     align-content: start;
 
-    padding: 65px;
+    padding: clamp(20px, 2.5vw, 40px);
 
     width: 100%;
     height: 100%;
@@ -102,28 +225,48 @@ export const ProductStyle = styled.div`
     .titleArea {
       display: grid;
       grid-template-columns: 1fr;
-      border-bottom: 1px solid var(--color-darkAccent);
-      padding-bottom: 5px;
+      border-bottom: 1px solid var(--color-accent);
+      padding-bottom: 8px;
+      gap: 8px;
+
+      .ratingLine {
+        margin: 0;
+        color: var(--color-accent);
+        font-size: 14px;
+        line-height: 1.5;
+
+        span {
+          color: #b7b7b7;
+          font-size: 12px;
+        }
+      }
 
       .name {
         font-family: "Inter", Helvetica, Arial, sans-serif;
         font-size: var(--title-size);
-        font-weight: 500;
+        font-weight: 700;
+        margin: 0;
+        overflow-wrap: anywhere;
+        letter-spacing: -0.025em;
         text-transform: uppercase;
-        line-height: 1;
+        line-height: 1.1;
       }
 
       .informative {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 16px;
 
         .material {
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 16px;
-          color: var(--color-muted-dark);
+          font-size: 13px;
+          line-height: 1.5;
+          color: #b7b7b7;
         }
 
         .tag {
@@ -144,12 +287,12 @@ export const ProductStyle = styled.div`
           align-self: center;
           background: var(--color-accent);
           color: var(--color-ink);
-          font-size: 16px;
+          font-size: 12px;
           font-weight: 800;
           letter-spacing: 0.05em;
           text-transform: uppercase;
           padding: 5px 10px;
-          height: 30px;
+          min-height: 30px;
         }
       }
     }
@@ -164,10 +307,12 @@ export const ProductStyle = styled.div`
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      justify-content: flex-end;
+      gap: 6px;
 
       .price {
         color: white;
-        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-size: clamp(2rem, 3vw, 2.75rem);
         line-height: 1;
         font-weight: 700;
       }
@@ -190,19 +335,43 @@ export const ProductStyle = styled.div`
       .tagOffer {
         background: var(--color-accent);
         color: var(--color-ink);
-        font-size: 16px;
+        font-size: 12px;
         font-weight: 800;
         letter-spacing: 0.05em;
         text-transform: uppercase;
-        padding: 1px 1px;
-        height: 30px;
+        padding: 3px 6px;
+        line-height: 1.2;
       }
     }
 
     .textArea {
-      padding-top: 15px;
       width: 100%;
-      height: 100%;
+
+      .informative {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        margin-top: 16px;
+        font-size: 12px;
+        line-height: 1.5;
+        color: #b7b7b7;
+      }
+
+      h2 {
+        margin: 0 0 8px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #b7b7b7;
+      }
+
+      p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.65;
+        color: #dedede;
+      }
     }
 
     .buttonArea {
@@ -214,15 +383,23 @@ export const ProductStyle = styled.div`
 
       button {
         cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
       }
 
       .buyButton {
-        font-size: 32px;
+        font-size: 16px;
+        font-weight: 700;
         grid-column: 1 / -1;
         background: var(--color-accent);
         border: none;
       }
-      .buyButton:hover {
+      .buyButton:hover:not(:disabled) {
         background: var(--color-accent);
         color: #fff;
         transition: 200ms;
@@ -233,7 +410,7 @@ export const ProductStyle = styled.div`
         color: #ffffff;
         border: 0.1px solid var(--color-darkAccent);
       }
-      .addButton:hover {
+      .addButton:hover:not(:disabled) {
         background: var(--color-inkClearSoft);
         color: #ffffff;
         transition: 200ms;
@@ -252,7 +429,7 @@ export const ProductStyle = styled.div`
           font-size: 28px;
           transition: 200ms;
         }
-        button:hover {
+        button:hover:not(:disabled) {
           background: var(--color-accent);
           color: #000;
           transition: 200ms;
@@ -269,7 +446,7 @@ export const ProductStyle = styled.div`
 
   @media (max-width: 1200px) {
     --width-gallery: 90px;
-    --title-size: clamp(2.5rem, 7vw, 4.75rem);
+    --title-size: clamp(2rem, 4vw, 3rem);
 
     .wrapper {
       padding-inline: 0;
@@ -303,8 +480,8 @@ export const ProductStyle = styled.div`
     .infoSector {
       grid-column: 1 / -1;
       grid-row: 2;
-      grid-template-rows: auto auto auto auto;
-      gap: clamp(24px, 4vw, 44px);
+      grid-template-rows: auto minmax(150px, 1fr) auto auto;
+      gap: 18px;
       height: auto;
       padding: clamp(36px, 6vw, 72px);
 
@@ -316,28 +493,26 @@ export const ProductStyle = styled.div`
   }
 
   @media (max-width: 700px) {
-    --title-size: clamp(2.25rem, 11vw, 4rem);
+    --title-size: clamp(1.75rem, 7vw, 2.5rem);
 
     .article {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto auto auto;
+      grid-template-columns: 64px minmax(0, 1fr);
+      grid-template-rows: auto auto;
     }
 
     .gallery {
       grid-column: 1;
       grid-row: 1;
-      grid-template-columns: repeat(3, minmax(76px, 96px));
-      grid-template-rows: 96px;
-      justify-content: center;
+      padding: 44px 4px;
+    }
+
+    .thumbnailList {
       gap: 8px;
-      padding: 8px;
-      overflow-x: auto;
-      overflow-y: hidden;
     }
 
     .productImage {
-      grid-column: 1;
-      grid-row: 2;
+      grid-column: 2;
+      grid-row: 1;
       width: 100%;
       height: auto;
       padding: 0;
@@ -349,9 +524,9 @@ export const ProductStyle = styled.div`
     }
 
     .infoSector {
-      grid-column: 1;
-      grid-row: 3;
-      gap: 28px;
+      grid-column: 1 / -1;
+      grid-row: 2;
+      gap: 18px;
       padding: 36px 24px 44px;
 
       .titleArea {
@@ -374,7 +549,7 @@ export const ProductStyle = styled.div`
 
       .priceArea {
         .price {
-          font-size: clamp(2.25rem, 12vw, 3.5rem);
+          font-size: clamp(2rem, 8vw, 2.75rem);
         }
       }
 

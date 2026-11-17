@@ -1,6 +1,17 @@
+export interface ProductImageInput {
+  imageUrl: string;
+  alt?: string | null;
+}
+
+export interface ProductImage extends ProductImageInput {
+  id: string;
+  position: number;
+}
+
 export type ItemLocation = "FEATURED" | "CATEGORIES" | "CUSTOM";
 
 export interface Product {
+  galleryImages: ProductImage[];
   id: string;
   category: string;
   categoryLabel: string;
@@ -21,17 +32,18 @@ export interface CartLine {
 }
 
 export interface ApiProduct {
+  galleryImages?: ProductImage[];
   id: string;
   postId: string;
   category: string;
-  categoryLabel: string;
-  name: string;
-  scale: string;
-  material: string;
+  categoryLabel: string | null;
+  name: string | null;
+  scale: string | null;
+  material: string | null;
   price: string;
-  tag: string;
+  tag: string | null;
   stock: number | null;
-  imageUrl: string;
-  alt: string;
+  imageUrl: string | null;
+  alt: string | null;
   location: ItemLocation | null;
 }
