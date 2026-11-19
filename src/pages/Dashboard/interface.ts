@@ -1,5 +1,7 @@
 import { PostType } from "../../types/post";
 import { ProductImageInput, ItemLocation } from "../../types/product";
+import { AdminUser } from "../../types/admin";
+import { OrderStatus } from "../../types/order";
 
 export interface EditableSection {
   key: string;
@@ -86,3 +88,11 @@ export const EMPTY_PRODUCT = {
   location: "" as ItemLocation | "",
   active: true,
 };
+
+export type ProductForm = typeof EMPTY_PRODUCT;
+
+export interface UserRowProps {
+  value: AdminUser;
+  onSaved: (user: AdminUser) => void;
+  onDeleted: (id: string) => void;
+}
